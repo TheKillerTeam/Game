@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0721E9BE1B693D0100A0764E /* Eric.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0721E9BD1B693D0100A0764E /* Eric.storyboard */; };
 		090E90741B673C1D002435F3 /* playerInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 090E90731B673C1D002435F3 /* playerInfoViewController.m */; };
 		093C731F1B66817800CA5400 /* play6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 093C731E1B66817800CA5400 /* play6.jpg */; };
 		09A4382E1B61288000B08E1A /* play7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 09A4382D1B61288000B08E1A /* play7.jpg */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0721E9BD1B693D0100A0764E /* Eric.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Eric.storyboard; sourceTree = "<group>"; };
 		090E90721B673C1D002435F3 /* playerInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = playerInfoViewController.h; sourceTree = "<group>"; };
 		090E90731B673C1D002435F3 /* playerInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = playerInfoViewController.m; sourceTree = "<group>"; };
 		093C731E1B66817800CA5400 /* play6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = play6.jpg; sourceTree = "<group>"; };
@@ -87,6 +89,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0721E9BC1B693BAE00A0764E /* Eric */ = {
+			isa = PBXGroup;
+			children = (
+				0721E9BD1B693D0100A0764E /* Eric.storyboard */,
+			);
+			name = Eric;
+			sourceTree = "<group>";
+		};
 		09B1EE871B64B3CC00E7C671 /* circle */ = {
 			isa = PBXGroup;
 			children = (
@@ -136,6 +146,7 @@
 				09B33CB91B5919EB00C9008A /* LaunchScreen.xib */,
 				09B33CAE1B5919EB00C9008A /* OurFirstGmae.xcdatamodeld */,
 				09B33CA71B5919EB00C9008A /* Supporting Files */,
+				0721E9BC1B693BAE00A0764E /* Eric */,
 			);
 			path = OurFirstGmae;
 			sourceTree = "<group>";
@@ -261,6 +272,7 @@
 				09B33CB61B5919EB00C9008A /* Main.storyboard in Resources */,
 				093C731F1B66817800CA5400 /* play6.jpg in Resources */,
 				09A4382E1B61288000B08E1A /* play7.jpg in Resources */,
+				0721E9BE1B693D0100A0764E /* Eric.storyboard in Resources */,
 				09B33CBB1B5919EB00C9008A /* LaunchScreen.xib in Resources */,
 				09B33CB81B5919EB00C9008A /* Images.xcassets in Resources */,
 			);

@@ -20,7 +20,6 @@
     dragImageView *playerImage;
     NSMutableArray *playerArray;
 
-    
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *chatBoxTableView;
