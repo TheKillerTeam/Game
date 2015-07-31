@@ -31,13 +31,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
   
-    _crop.layer.borderWidth=20.0;
+    _crop.layer.borderWidth=1.0;
     _crop.layer.borderColor=[UIColor redColor].CGColor;
     
     [_crop step];
     
-
-   
   
     
 }
@@ -66,6 +64,12 @@
     ImagePicker.sourceType = sourceType;
   
      [self presentViewController:ImagePicker animated:YES completion:NULL];
+    
+    
+    
+    
+    
+    
 
     
     
@@ -92,12 +96,50 @@
    
 
     ImagePicker.delegate=self;
-    
+    [_crop step];
     
      [self presentViewController:ImagePicker animated:YES completion:NULL];
     
     
 }
+
+-(UIImage*) conbineImage:(UIImage*)firstImage withImage:(UIImage*)secondImage{
+    
+    CGSize targetSize = CGSizeMake(MAX(firstImage.size.width,secondImage.size.width), MAX(firstImage.size.height, secondImage.size.height));
+    UIGraphicsBeginImageContext(targetSize);
+    [firstImage drawInRect:CGRectMake(0, 0, firstImage.size.width, firstImage.size.height)];
+    [secondImage drawInRect:CGRectMake(0, 0, secondImage.size.width, secondImage.size.height)];
+    
+    
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    
+    
+    
+    
+    
+    UIGraphicsEndImageContext();
+    
+    
+    
+    
+    
+    
+    return newImage;
+}
+
+
+
+
+- (IBAction)nextButton:(id)sender {
+    
+    [self performSegueWithIdentifier:@"goMainView" sender:nil];
+    
+    
+    
+    
+}
+
 
 
 

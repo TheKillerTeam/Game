@@ -8,6 +8,9 @@
 
 #import "cropView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "clothCell.h"
+
+#define TABLEVIEW_HEIGHT 100
 @implementation cropView
 {
     CGFloat lastScale,lastX,lastY;
@@ -24,11 +27,16 @@
 
 -(void)step{
  
+    
+    uniformArray = [NSArray new];
+    
+     uniformArray = @[[UIImage imageNamed:@"play6.jpg"],[UIImage imageNamed:@"play7.jpg"]];
     self.clipsToBounds =YES;
 
     
-    int radius = 80;
-    mask=[[UIView alloc]initWithFrame:CGRectMake(self.frame.size.width/2-80, self.frame.size.height/2-130, 2*radius, 2*radius)];
+    int radius = 70;
+    mask=[[UIView alloc]initWithFrame:CGRectMake(self.frame.size.width/2, self.frame.size.height/2-270, 2*radius, 2*radius)];
+    mask.center= CGPointMake(self.frame.size.width/2, self.frame.size.height/2-200);
     mask.layer.cornerRadius=radius;
     mask.layer.masksToBounds=YES;
     mask.clipsToBounds=YES;
@@ -45,12 +53,9 @@
     
     
     imageView=[UIImageView new];
-    imageView.frame = CGRectMake(0, 0, 100 ,100);
-    imageView.layer.masksToBounds=YES;
+    imageView.frame = CGRectMake(mask.frame.size.width/2, mask.frame.size.height/2, 2*radius ,2*radius);
+    imageView.center=CGPointMake(mask.frame.size.width/2, mask.frame.size.height/2);
     [mask addSubview:imageView];
-    
-    
-    
     
     
     
@@ -63,6 +68,36 @@
     [moveGes setMinimumNumberOfTouches:1];
     [moveGes setMaximumNumberOfTouches:1];
     [mask addGestureRecognizer:moveGes];
+    
+    
+
+    
+    clothFrame  = [UITableView new];
+    clothFrame.backgroundColor = [UIColor whiteColor];
+    [clothFrame.layer setAnchorPoint:CGPointMake(0.0, 0.0)];
+    clothFrame.transform = CGAffineTransformMakeRotation(M_PI/-2);
+    clothFrame.showsVerticalScrollIndicator = YES;
+    clothFrame.frame = CGRectMake(0, self.frame.size.height, self.frame.size.width, 150);
+    clothFrame.rowHeight = self.frame.size.width/4;
+    NSLog(@"%f,%f,%f,%f",clothFrame.frame.origin.x,clothFrame.frame.origin.y,clothFrame.frame.size.width,clothFrame.frame.size.height);
+    clothFrame.delegate = self;
+    clothFrame.dataSource = self;
+    [self addSubview:clothFrame];
+    
+    
+    _clothImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 200, 300)];
+    _clothImage.backgroundColor = [UIColor redColor];
+    CGRect frame = _clothImage.frame;
+    frame.origin.y = mask.center.y;
+    frame.origin.x = self.frame.size.width/2-_clothImage.frame.size.width/2;
+    _clothImage.frame = frame;
+    
+    
+    [self insertSubview:_clothImage belowSubview:mask];
+    
+    
+    
+    
     
     
     
@@ -121,6 +156,39 @@
     
     
 }
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return uniformArray.count;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSString *cellID = @"cellID";
+    clothCell *cell =[tableView dequeueReusableCellWithIdentifier:cellID];
+    if(cell ==nil){
+        cell = [[clothCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+    }
+    if(tableView == clothFrame){
+       
+        UIImage *uniform = [uniformArray objectAtIndex:indexPath.row];
+        cell.imageView.image = uniform;
+        cell.imageView.transform=CGAffineTransformMakeRotation(M_PI/2);
 
+    
+    }
+    
+    
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    
+    if(imageView.image !=nil){
+    _clothImage.image = uniformArray[indexPath.row];
+    }
+    
+    
+    
+    
+}
 
 @end

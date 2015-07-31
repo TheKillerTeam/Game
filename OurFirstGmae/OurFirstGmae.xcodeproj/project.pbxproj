@@ -11,6 +11,7 @@
 		093C731F1B66817800CA5400 /* play6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 093C731E1B66817800CA5400 /* play6.jpg */; };
 		09A4382E1B61288000B08E1A /* play7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 09A4382D1B61288000B08E1A /* play7.jpg */; };
 		09A438341B61507A00B08E1A /* playerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A438331B61507A00B08E1A /* playerCell.m */; };
+		09A64A0D1B6A7C950073C0F9 /* clothCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A64A0C1B6A7C950073C0F9 /* clothCell.m */; };
 		09B1EE8A1B64B3EE00E7C671 /* circleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 09B1EE891B64B3EE00E7C671 /* circleView.m */; };
 		09B1EE8D1B64B63700E7C671 /* dragImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 09B1EE8C1B64B63700E7C671 /* dragImageView.m */; };
 		09B33CAA1B5919EB00C9008A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 09B33CA91B5919EB00C9008A /* main.m */; };
@@ -43,6 +44,8 @@
 		09A4382D1B61288000B08E1A /* play7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = play7.jpg; sourceTree = "<group>"; };
 		09A438321B61507A00B08E1A /* playerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = playerCell.h; sourceTree = "<group>"; };
 		09A438331B61507A00B08E1A /* playerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = playerCell.m; sourceTree = "<group>"; };
+		09A64A0B1B6A7C950073C0F9 /* clothCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = clothCell.h; sourceTree = "<group>"; };
+		09A64A0C1B6A7C950073C0F9 /* clothCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = clothCell.m; sourceTree = "<group>"; };
 		09B1EE881B64B3EE00E7C671 /* circleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = circleView.h; sourceTree = "<group>"; };
 		09B1EE891B64B3EE00E7C671 /* circleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = circleView.m; sourceTree = "<group>"; };
 		09B1EE8B1B64B63700E7C671 /* dragImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dragImageView.h; sourceTree = "<group>"; };
@@ -173,6 +176,8 @@
 				090E90731B673C1D002435F3 /* playerInfoViewController.m */,
 				09C3B3871B67E7DA00518DBE /* cropView.h */,
 				09C3B3881B67E7DA00518DBE /* cropView.m */,
+				09A64A0B1B6A7C950073C0F9 /* clothCell.h */,
+				09A64A0C1B6A7C950073C0F9 /* clothCell.m */,
 			);
 			name = "New Group";
 			sourceTree = "<group>";
@@ -286,6 +291,7 @@
 				09A438341B61507A00B08E1A /* playerCell.m in Sources */,
 				09B1EE8A1B64B3EE00E7C671 /* circleView.m in Sources */,
 				090E90741B673C1D002435F3 /* playerInfoViewController.m in Sources */,
+				09A64A0D1B6A7C950073C0F9 /* clothCell.m in Sources */,
 				09C3B3891B67E7DA00518DBE /* cropView.m in Sources */,
 				09B1EE8D1B64B63700E7C671 /* dragImageView.m in Sources */,
 				09B33CB01B5919EB00C9008A /* OurFirstGmae.xcdatamodeld in Sources */,

@@ -17,5 +17,7 @@
     CGPoint center;
 }
 @property(weak,nonatomic)NSMutableArray *ImgArray;
+
+
 -(void)loadView;
 @end
