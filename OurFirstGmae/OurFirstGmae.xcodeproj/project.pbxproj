@@ -92,15 +92,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0721E9BC1B693BAE00A0764E /* Eric */ = {
+		09B02BA61B6B7EC7002D8FBF /* FrameWorks */ = {
 			isa = PBXGroup;
 			children = (
-				0721E9BD1B693D0100A0764E /* Eric.storyboard */,
+				09C3B3851B67D5AA00518DBE /* QuartzCore.framework */,
+				09E901481B6748B600555908 /* AssetsLibrary.framework */,
 			);
-			name = Eric;
+			name = FrameWorks;
+			path = ..;
 			sourceTree = "<group>";
 		};
-		09B1EE871B64B3CC00E7C671 /* circle */ = {
+		09B02BA71B6B7F01002D8FBF /* StoryBoards */ = {
+			isa = PBXGroup;
+			children = (
+				09B33CB41B5919EB00C9008A /* Main.storyboard */,
+				0721E9BD1B693D0100A0764E /* Eric.storyboard */,
+			);
+			name = StoryBoards;
+			sourceTree = "<group>";
+		};
+		09B02BA81B6B7F53002D8FBF /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				09A4382D1B61288000B08E1A /* play7.jpg */,
+				093C731E1B66817800CA5400 /* play6.jpg */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		09B1EE871B64B3CC00E7C671 /* Circle */ = {
 			isa = PBXGroup;
 			children = (
 				09B1EE8B1B64B63700E7C671 /* dragImageView.h */,
@@ -108,14 +128,12 @@
 				09B1EE881B64B3EE00E7C671 /* circleView.h */,
 				09B1EE891B64B3EE00E7C671 /* circleView.m */,
 			);
-			name = circle;
+			name = Circle;
 			sourceTree = "<group>";
 		};
 		09B33C9B1B5919EB00C9008A = {
 			isa = PBXGroup;
 			children = (
-				09C3B3851B67D5AA00518DBE /* QuartzCore.framework */,
-				09E901481B6748B600555908 /* AssetsLibrary.framework */,
 				09B33CA61B5919EB00C9008A /* OurFirstGmae */,
 				09B33CC31B5919EB00C9008A /* OurFirstGmaeTests */,
 				09B33CA51B5919EB00C9008A /* Products */,
@@ -134,22 +152,19 @@
 		09B33CA61B5919EB00C9008A /* OurFirstGmae */ = {
 			isa = PBXGroup;
 			children = (
-				09A4382D1B61288000B08E1A /* play7.jpg */,
-				093C731E1B66817800CA5400 /* play6.jpg */,
 				09B33CAB1B5919EB00C9008A /* AppDelegate.h */,
 				09B33CAC1B5919EB00C9008A /* AppDelegate.m */,
 				09B33CB11B5919EB00C9008A /* ViewController.h */,
 				09B33CB21B5919EB00C9008A /* ViewController.m */,
-				09B33CB41B5919EB00C9008A /* Main.storyboard */,
 				09A438321B61507A00B08E1A /* playerCell.h */,
 				09A438331B61507A00B08E1A /* playerCell.m */,
-				09E901441B67428700555908 /* New Group */,
-				09B1EE871B64B3CC00E7C671 /* circle */,
 				09B33CB71B5919EB00C9008A /* Images.xcassets */,
-				09B33CB91B5919EB00C9008A /* LaunchScreen.xib */,
-				09B33CAE1B5919EB00C9008A /* OurFirstGmae.xcdatamodeld */,
+				09B1EE871B64B3CC00E7C671 /* Circle */,
+				09E901441B67428700555908 /* PlayerInformationView */,
+				09B02BA61B6B7EC7002D8FBF /* FrameWorks */,
+				09B02BA71B6B7F01002D8FBF /* StoryBoards */,
+				09B02BA81B6B7F53002D8FBF /* Images */,
 				09B33CA71B5919EB00C9008A /* Supporting Files */,
-				0721E9BC1B693BAE00A0764E /* Eric */,
 			);
 			path = OurFirstGmae;
 			sourceTree = "<group>";
@@ -157,6 +172,8 @@
 		09B33CA71B5919EB00C9008A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				09B33CB91B5919EB00C9008A /* LaunchScreen.xib */,
+				09B33CAE1B5919EB00C9008A /* OurFirstGmae.xcdatamodeld */,
 				09B33CA81B5919EB00C9008A /* Info.plist */,
 				09B33CA91B5919EB00C9008A /* main.m */,
 			);
@@ -180,7 +197,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		09E901441B67428700555908 /* New Group */ = {
+		09E901441B67428700555908 /* PlayerInformationView */ = {
 			isa = PBXGroup;
 			children = (
 				090E90721B673C1D002435F3 /* playerInfoViewController.h */,
@@ -190,7 +207,7 @@
 				09A64A0B1B6A7C950073C0F9 /* clothCell.h */,
 				09A64A0C1B6A7C950073C0F9 /* clothCell.m */,
 			);
-			name = "New Group";
+			name = PlayerInformationView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
