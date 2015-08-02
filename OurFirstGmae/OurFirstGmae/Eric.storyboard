@@ -4,10 +4,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Menu View Controller-->
         <scene sceneID="taL-Dq-AFb">
             <objects>
-                <viewController id="5Uj-2L-7xS" sceneMemberID="viewController">
+                <viewController id="5Uj-2L-7xS" customClass="MenuViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Rd8-oj-zgc"/>
                         <viewControllerLayoutGuide type="bottom" id="Dk2-7M-y4a"/>
@@ -15,12 +15,35 @@
                     <view key="view" contentMode="scaleToFill" id="7F1-kr-Ixs">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dbZ-2c-iqJ">
+                                <rect key="frame" x="285" y="132" width="30" height="30"/>
+                                <state key="normal" title="Play">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DebugLabel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qTv-eE-ad9">
+                                <rect key="frame" x="246" y="100" width="107" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="qTv-eE-ad9" secondAttribute="centerX" id="2yI-j1-sMq"/>
+                            <constraint firstAttribute="centerX" secondItem="dbZ-2c-iqJ" secondAttribute="centerX" id="4Wa-Pl-d9u"/>
+                            <constraint firstItem="dbZ-2c-iqJ" firstAttribute="top" secondItem="qTv-eE-ad9" secondAttribute="bottom" constant="8" id="918-fp-x9m"/>
+                            <constraint firstItem="qTv-eE-ad9" firstAttribute="top" secondItem="Rd8-oj-zgc" secondAttribute="bottom" constant="80" id="g0C-0o-0kX"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="debugLabel" destination="qTv-eE-ad9" id="ty9-GF-x1W"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MWV-8d-QEc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="247" y="276"/>
+            <point key="canvasLocation" x="-71" y="360"/>
         </scene>
     </scenes>
 </document>

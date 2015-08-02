@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "NetworkController.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    //登入gamecenter
+    [[NetworkController sharedInstance] authenticateLocalUser];
+    
     return YES;
 }
 
