@@ -9,16 +9,17 @@
 #import "ViewController.h"
 #import "playerCell.h"
 #import "circleView.h"
-
+#import "playerInfoViewController.h"
 #define INPUT_BAR_HEIGHT 60
 
-@interface ViewController ()
+@interface ViewController ()<playerInfoViewControllerDelegate>
 {
     UIView *inputBar;
     CGRect originframeChatBox;
     struct CGColor *oringincolorChatBox;
     dragImageView *playerImage;
     NSMutableArray *playerArray;
+    UIImage *transImage;
 
 }
 
@@ -109,7 +110,8 @@
     
     
     
-
+    playerInfoViewController *playerController = [playerInfoViewController new];
+    playerController.delegate=self;
    
 }
 
@@ -124,7 +126,7 @@
 -(void)initImageView{
  
     player1 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 50, 50)];
-    player1.image = [UIImage imageNamed:@"play7.jpg"];
+    player1.image =transImage;
     
     player2 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 50, 50)];
     player2.image = [UIImage imageNamed:@"play7.jpg"];
@@ -143,6 +145,19 @@
     
 }
 
+-(void)transImage:(UIImage*)image{
+    
+    
+  
+   
+    UIImageView *testView =[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 400, 400)];
+    testView.image=image;
+    [self.view addSubview:testView];
+    
+    
+    
+
+}
 -(void)fromCircleView{
     circleView *circle =[[circleView alloc]initWithFrame:CGRectMake(0, 0, _thePlayerView.frame.size.width, _thePlayerView.frame.size.height)];
     circle.ImgArray  = playerArray;

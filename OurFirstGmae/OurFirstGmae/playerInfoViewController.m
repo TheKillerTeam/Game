@@ -89,7 +89,9 @@
     
 }
 - (IBAction)album:(id)sender {
+    
     ImagePicker=[UIImagePickerController new];
+    
     UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     
     ImagePicker.sourceType = sourceType;
@@ -97,41 +99,26 @@
 
     ImagePicker.delegate=self;
     [_crop step];
-    
+   
      [self presentViewController:ImagePicker animated:YES completion:NULL];
     
     
 }
 
--(UIImage*) conbineImage:(UIImage*)firstImage withImage:(UIImage*)secondImage{
-    
-    CGSize targetSize = CGSizeMake(MAX(firstImage.size.width,secondImage.size.width), MAX(firstImage.size.height, secondImage.size.height));
-    UIGraphicsBeginImageContext(targetSize);
-    [firstImage drawInRect:CGRectMake(0, 0, firstImage.size.width, firstImage.size.height)];
-    [secondImage drawInRect:CGRectMake(0, 0, secondImage.size.width, secondImage.size.height)];
-    
-    
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    
-    
-    
-    
-    
-    
-    UIGraphicsEndImageContext();
-    
-    
-    
-    
-    
-    
-    return newImage;
-}
+
 
 
 
 
 - (IBAction)nextButton:(id)sender {
+    
+    UIGraphicsBeginImageContext(_crop.bounds.size);
+    [_crop.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *myImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    [self.delegate transImage:myImage];
+    
     
     [self performSegueWithIdentifier:@"goMainView" sender:nil];
     
@@ -140,7 +127,9 @@
     
 }
 
-
+-(void)transImage{
+   
+}
 
 
 

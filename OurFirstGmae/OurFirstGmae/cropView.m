@@ -9,11 +9,12 @@
 #import "cropView.h"
 #import <QuartzCore/QuartzCore.h>
 #import "clothCell.h"
-
+#define RADIUS 70
 #define TABLEVIEW_HEIGHT 100
 @implementation cropView
 {
     CGFloat lastScale,lastX,lastY;
+    UIButton *button;
   
 }
 
@@ -32,29 +33,39 @@
     
      uniformArray = @[[UIImage imageNamed:@"play6.jpg"],[UIImage imageNamed:@"play7.jpg"]];
     self.clipsToBounds =YES;
-
     
-    int radius = 70;
-    mask=[[UIView alloc]initWithFrame:CGRectMake(self.frame.size.width/2, self.frame.size.height/2-270, 2*radius, 2*radius)];
+    cover= [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width,self.frame.size.height-200)];
+    cover.backgroundColor=[UIColor whiteColor];
+    [self addSubview:cover];
+    
+    
+    
+    
+//    int radius = 70;
+    mask=[[UIImageView alloc]initWithFrame:CGRectMake(self.frame.size.width/2, self.frame.size.height/2-270, 2*RADIUS, 2*RADIUS)];
     mask.center= CGPointMake(self.frame.size.width/2, self.frame.size.height/2-200);
-    mask.layer.cornerRadius=radius;
+    mask.layer.cornerRadius=RADIUS;
     mask.layer.masksToBounds=YES;
-    mask.clipsToBounds=YES;
+    mask.clipsToBounds=NO;
    
     
     
     mask.layer.borderWidth=5;
     mask.layer.borderColor=[UIColor redColor].CGColor;
     mask.layer.backgroundColor=[UIColor whiteColor].CGColor;
-    
+    mask.userInteractionEnabled= YES;
     [self addSubview:mask];
  
     
     
     
     imageView=[UIImageView new];
-    imageView.frame = CGRectMake(mask.frame.size.width/2, mask.frame.size.height/2, 2*radius ,2*radius);
+    
+    imageView.frame = CGRectMake(mask.frame.size.width/2, mask.frame.size.height/2, 2*RADIUS ,2*RADIUS);
     imageView.center=CGPointMake(mask.frame.size.width/2, mask.frame.size.height/2);
+//    imageView.layer.cornerRadius=RADIUS;
+//    imageView.layer.masksToBounds=YES;
+//    imageView.clipsToBounds=YES;
     [mask addSubview:imageView];
     
     
@@ -92,20 +103,21 @@
     frame.origin.x = self.frame.size.width/2-_clothImage.frame.size.width/2;
     _clothImage.frame = frame;
     
-    
+
     [self insertSubview:_clothImage belowSubview:mask];
     
+    button= [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setTitle:@"add" forState:UIControlStateNormal];
+    [button setBackgroundColor:[UIColor redColor]];
+    [button setFrame:CGRectMake(0, 0, 50,50)];
+    [button addTarget:self action:@selector(btnPressed) forControlEvents:UIControlEventTouchUpInside];
     
-    
-    
-    
-    
-    
-    
+    [self addSubview:button];
     
     
     
 }
+
 -(id)initWithFrame:(CGRect)frame{
     self=[super initWithFrame:frame];
     if(self){
@@ -150,8 +162,8 @@
 }
 
 -(void)setImage:(UIImage*)image1{
-   
     imageView.image=image1;
+    
     
     
     
@@ -190,5 +202,51 @@
     
     
 }
+
+
+
+
+
+
+-(UIImage*) conbineImage:(UIImage*)firstImage withImage:(UIImage*)secondImage{
+    
+    CGSize targetSize = CGSizeMake(MAX(firstImage.size.width,secondImage.size.width), MAX(firstImage.size.height, secondImage.size.height));
+    UIGraphicsBeginImageContext(targetSize);
+    [firstImage drawInRect:CGRectMake(0, 0, firstImage.size.width, firstImage.size.height)];
+    [secondImage drawInRect:CGRectMake(0, 0, secondImage.size.width, secondImage.size.height)];
+    
+    
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    
+    
+    
+    
+    
+    UIGraphicsEndImageContext();
+    
+    
+    
+    
+    
+    
+    return newImage;
+}
+
+-(void)btnPressed{
+    UIGraphicsBeginImageContext(self.bounds.size);
+    [self.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *myImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    UIImageView *testView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 400, 400)];
+    
+    testView.image = myImage;
+    [self addSubview:testView];
+    
+    
+
+}
+
 
 @end

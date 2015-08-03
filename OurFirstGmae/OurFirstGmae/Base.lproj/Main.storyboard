@@ -286,7 +286,7 @@
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oxo-w7-Dhu" customClass="cropView">
                                 <rect key="frame" x="0.0" y="123" width="375" height="544"/>
-                                <color key="backgroundColor" red="1" green="0.81973105863601248" blue="0.32745979846188755" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.97789034250062812" green="1" blue="0.58895431198451487" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="375" id="ArN-ol-BkZ"/>
                                     <constraint firstAttribute="height" constant="544" id="g3e-Hm-ukd"/>
