@@ -16,16 +16,22 @@ typedef enum {
     NetworkStateAuthenticated,
     NetworkStateConnectingToServer,
     NetworkStateConnected,
+    NetworkStatePendingMatchStatus,
+    NetworkStateReceivedMatchStatus,
+    NetworkStatePendingMatch,
+    NetworkStatePendingMatchStart,
+    NetworkStateMatchActive,
     
 } NetworkState;
 
 @protocol NetworkControllerDelegate
 
-- (void)stateChanged:(NetworkState)state;
+- (void)networkStateChanged:(NetworkState)state;
+- (void)setNotInMatch;
 
 @end
 
-@interface NetworkController : NSObject <NSStreamDelegate>
+@interface NetworkController : NSObject
 
 @property (assign, readonly) BOOL gameCenterAvailable;
 @property (assign, readonly) BOOL userAuthenticated;
@@ -34,5 +40,7 @@ typedef enum {
 
 + (NetworkController *)sharedInstance;
 - (void)authenticateLocalUser;
+- (void)findMatchWithMinPlayers:(int)minPlayers maxPlayers:(int)maxPlayers
+                 viewController:(UIViewController *)viewController;
 
 @end

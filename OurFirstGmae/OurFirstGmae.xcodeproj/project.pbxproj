@@ -11,6 +11,8 @@
 		0735BBB71B6EB351000CFD5A /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0735BBB61B6EB351000CFD5A /* GameKit.framework */; };
 		0735BBBA1B6EB4D8000CFD5A /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0735BBB91B6EB4D8000CFD5A /* MenuViewController.m */; };
 		0735BBBE1B6EB568000CFD5A /* NetworkController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0735BBBD1B6EB568000CFD5A /* NetworkController.m */; };
+		0735BBC21B6EC89D000CFD5A /* MessageWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0735BBC11B6EC89D000CFD5A /* MessageWriter.m */; };
+		0735BBC61B6ED833000CFD5A /* MessageReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0735BBC51B6ED833000CFD5A /* MessageReader.m */; };
 		090E90741B673C1D002435F3 /* playerInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 090E90731B673C1D002435F3 /* playerInfoViewController.m */; };
 		093C731F1B66817800CA5400 /* play6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 093C731E1B66817800CA5400 /* play6.jpg */; };
 		09A4382E1B61288000B08E1A /* play7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 09A4382D1B61288000B08E1A /* play7.jpg */; };
@@ -48,6 +50,10 @@
 		0735BBB91B6EB4D8000CFD5A /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		0735BBBC1B6EB568000CFD5A /* NetworkController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkController.h; sourceTree = "<group>"; };
 		0735BBBD1B6EB568000CFD5A /* NetworkController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkController.m; sourceTree = "<group>"; };
+		0735BBC01B6EC89D000CFD5A /* MessageWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageWriter.h; sourceTree = "<group>"; };
+		0735BBC11B6EC89D000CFD5A /* MessageWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageWriter.m; sourceTree = "<group>"; };
+		0735BBC41B6ED833000CFD5A /* MessageReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageReader.h; sourceTree = "<group>"; };
+		0735BBC51B6ED833000CFD5A /* MessageReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageReader.m; sourceTree = "<group>"; };
 		090E90721B673C1D002435F3 /* playerInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = playerInfoViewController.h; sourceTree = "<group>"; };
 		090E90731B673C1D002435F3 /* playerInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = playerInfoViewController.m; sourceTree = "<group>"; };
 		093C731E1B66817800CA5400 /* play6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = play6.jpg; sourceTree = "<group>"; };
@@ -108,6 +114,24 @@
 				0735BBBD1B6EB568000CFD5A /* NetworkController.m */,
 			);
 			name = Network;
+			sourceTree = "<group>";
+		};
+		0735BBBF1B6EC880000CFD5A /* MessageWriter */ = {
+			isa = PBXGroup;
+			children = (
+				0735BBC01B6EC89D000CFD5A /* MessageWriter.h */,
+				0735BBC11B6EC89D000CFD5A /* MessageWriter.m */,
+			);
+			name = MessageWriter;
+			sourceTree = "<group>";
+		};
+		0735BBC31B6ED81E000CFD5A /* MessageReader */ = {
+			isa = PBXGroup;
+			children = (
+				0735BBC41B6ED833000CFD5A /* MessageReader.h */,
+				0735BBC51B6ED833000CFD5A /* MessageReader.m */,
+			);
+			name = MessageReader;
 			sourceTree = "<group>";
 		};
 		09B02BA61B6B7EC7002D8FBF /* FrameWorks */ = {
@@ -179,14 +203,16 @@
 				0735BBB91B6EB4D8000CFD5A /* MenuViewController.m */,
 				09A438321B61507A00B08E1A /* playerCell.h */,
 				09A438331B61507A00B08E1A /* playerCell.m */,
-				0735BBBB1B6EB51B000CFD5A /* Network */,
 				09B33CB71B5919EB00C9008A /* Images.xcassets */,
 				09B1EE871B64B3CC00E7C671 /* Circle */,
 				09E901441B67428700555908 /* PlayerInformationView */,
-				09B02BA61B6B7EC7002D8FBF /* FrameWorks */,
+				0735BBBB1B6EB51B000CFD5A /* Network */,
+				0735BBBF1B6EC880000CFD5A /* MessageWriter */,
+				0735BBC31B6ED81E000CFD5A /* MessageReader */,
 				09B02BA71B6B7F01002D8FBF /* StoryBoards */,
 				09B02BA81B6B7F53002D8FBF /* Images */,
 				09B33CA71B5919EB00C9008A /* Supporting Files */,
+				09B02BA61B6B7EC7002D8FBF /* FrameWorks */,
 			);
 			path = OurFirstGmae;
 			sourceTree = "<group>";
@@ -336,12 +362,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0735BBC61B6ED833000CFD5A /* MessageReader.m in Sources */,
 				09B33CAD1B5919EB00C9008A /* AppDelegate.m in Sources */,
 				09B33CAA1B5919EB00C9008A /* main.m in Sources */,
 				09B33CB31B5919EB00C9008A /* ViewController.m in Sources */,
 				09A438341B61507A00B08E1A /* playerCell.m in Sources */,
 				0735BBBE1B6EB568000CFD5A /* NetworkController.m in Sources */,
 				09B1EE8A1B64B3EE00E7C671 /* circleView.m in Sources */,
+				0735BBC21B6EC89D000CFD5A /* MessageWriter.m in Sources */,
 				090E90741B673C1D002435F3 /* playerInfoViewController.m in Sources */,
 				09A64A0D1B6A7C950073C0F9 /* clothCell.m in Sources */,
 				09C3B3891B67E7DA00518DBE /* cropView.m in Sources */,
