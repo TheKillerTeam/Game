@@ -28,7 +28,7 @@ typedef enum {
 
 @protocol NetworkControllerDelegate
 
-- (void)networkStateChanged:(NetworkState)state;
+- (void)networkStateChanged:(NetworkState)networkState;
 - (void)setNotInMatch;
 - (void)matchStarted:(Match *)match;
 

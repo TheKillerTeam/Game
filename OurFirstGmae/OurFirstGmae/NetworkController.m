@@ -12,14 +12,14 @@
 #import "Match.h"
 #import "Player.h"
 
-#define SERVER_IP @"172.20.10.3"
+#define SERVER_IP @"220.134.136.189"
 
 typedef enum {
     
-    MessagePlayerConnected = 0,
-    MessageNotInMatch,
-    MessageStartMatch,
-    MessageMatchStarted,
+    MessagePlayerConnected = 0,//output用
+    MessageNotInMatch,//input用
+    MessageStartMatch,//output用
+    MessageMatchStarted,//input用
     
 } MessageType;
 
@@ -67,9 +67,9 @@ static NetworkController *sharedController = nil;
     return (gcClass && osVersionSupported);
 }
 
-- (void)setNetworkState:(NetworkState)state {
+- (void)setNetworkState:(NetworkState)networkState {
     
-    _networkState = state;
+    _networkState = networkState;
     
     if (_delegate) {
         [_delegate networkStateChanged:_networkState];
@@ -484,6 +484,11 @@ static NetworkController *sharedController = nil;
         }else {
             
             NSLog(@"local player not authenticated");
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Game center login required" message:@"please login game center to continue" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+            [alert addAction:ok];
+            UIViewController *rootVC = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+            [rootVC presentViewController:alert animated:YES completion:nil];
         }
     }];
 }
@@ -522,6 +527,7 @@ static NetworkController *sharedController = nil;
 - (void)matchmakerViewControllerWasCancelled:(GKMatchmakerViewController *)viewController {
     
     NSLog(@"matchmakerViewControllerWasCancelled");
+    [self setNetworkState:NetworkStateReceivedMatchStatus];
     [self dismissMatchmaker];
 }
 
@@ -529,6 +535,7 @@ static NetworkController *sharedController = nil;
 - (void)matchmakerViewController:(GKMatchmakerViewController *)viewController didFailWithError:(NSError *)error {
     
     NSLog(@"didFailWithError: %@", error.localizedDescription);
+    [self setNetworkState:NetworkStateReceivedMatchStatus];
     [self dismissMatchmaker];
 }
 

@@ -1,5 +1,7 @@
 from twisted.internet.protocol import Factory, Protocol
 from twisted.internet import reactor
+from twisted.internet.task import LoopingCall
+from time import time
 from struct import *
 
 MESSAGE_PLAYER_CONNECTED = 0
@@ -11,6 +13,8 @@ MATCH_STATE_ACTIVE = 0
 MATCH_STATE_GAME_OVER = 1
 
 PLAYER_STATE_ONE = 0
+
+SECS_FOR_SHUTDOWN = 5
 
 class MessageReader:
 
@@ -56,6 +60,10 @@ class GameMatch:
     def __init__(self, players):
         self.players = players
         self.state = MATCH_STATE_ACTIVE
+	self.pendingShutdown = False
+	self.shutdownTime = 0
+	self.timer = LoopingCall(self.update)
+	self.timer.start(5)
 
     def __repr__(self):
         return "%d %s" % (self.state, str(self.players))
@@ -65,6 +73,30 @@ class GameMatch:
         message.writeByte(len(self.players))
         for matchPlayer in self.players:
 	    matchPlayer.write(message)
+	    
+    def update(self):
+	print "Match update: %s" % (str(self))
+	if (self.pendingShutdown):
+	    cancelShutdown = True
+	    for player in self.players:
+		if player.protocol == None:
+		    cancelShutdown  =False
+	    if (time() > self.shutdownTime):
+		print "Time elapsed, shutting down match"
+		self.quit()
+	else:
+	    for player in self.players:
+		if player.protocol == None:
+		    print "Player %s disconnected, scheduling shutdown" % (player.alias)
+		    self.pendingShutdown = True
+		    self.shutdownTime = time() + SECS_FOR_SHUTDOWN
+			
+    def quit(self):
+	self.timer.stop()
+	for matchPlayer in self.players:
+	    matchPlayer.match = None
+	    if matchPlayer.protocol:
+		matchPlayer.protocol.sendNotInMatch()    
 
 class GamePlayer:
 

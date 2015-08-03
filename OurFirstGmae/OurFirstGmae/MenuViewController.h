@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "NetworkController.h"
 
-@class Match;
+@interface MenuViewController : UIViewController
 
-@interface MenuViewController : UIViewController <NetworkControllerDelegate>
+@property (nonatomic, assign) BOOL notInMatch;
 
 @end
