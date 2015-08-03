@@ -7,7 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol playerInfoViewControllerDelegate<NSObject>
+
+-(void)transImage:(UIImage*)image;
+
+
+
+
+
+@end
+
 
 @interface playerInfoViewController : UIViewController
+@property(nonatomic,weak)id<playerInfoViewControllerDelegate>delegate;
 
 @end
