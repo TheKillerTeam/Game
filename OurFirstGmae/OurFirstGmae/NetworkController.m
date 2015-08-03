@@ -9,13 +9,17 @@
 #import "NetworkController.h"
 #import "MessageWriter.h"
 #import "MessageReader.h"
+#import "Match.h"
+#import "Player.h"
 
-#define SERVER_IP @"220.134.136.189"
+#define SERVER_IP @"172.20.10.3"
 
 typedef enum {
     
     MessagePlayerConnected = 0,
     MessageNotInMatch,
+    MessageStartMatch,
+    MessageMatchStarted,
     
 } MessageType;
 
@@ -138,6 +142,20 @@ static NetworkController *sharedController = nil;
     [self sendData:writer.data];
 }
 
+- (void)sendStartMatch:(NSArray *)players {
+    
+    [self setNetworkState:NetworkStatePendingMatchStart];
+    
+    MessageWriter * writer = [MessageWriter new];
+    [writer writeByte:MessageStartMatch];
+    [writer writeByte:players.count];
+    
+    for(NSString *playerId in players) {
+        
+        [writer writeString:playerId];
+    }
+    [self sendData:writer.data];
+}
 
 - (void)processMessage:(NSData *)data {
     
@@ -149,6 +167,25 @@ static NetworkController *sharedController = nil;
         
         [self setNetworkState:NetworkStateReceivedMatchStatus];
         [_delegate setNotInMatch];
+        
+    }else if (msgType == MessageMatchStarted) {
+        
+        [self setNetworkState:NetworkStateMatchActive];
+        [self dismissMatchmaker];
+        unsigned char matchState = [reader readByte];
+        NSMutableArray *players = [NSMutableArray array];
+        unsigned char numPlayers = [reader readByte];
+        
+        for (unsigned char i = 0; i < numPlayers; ++i) {
+            
+            NSString *playerId = [reader readString];
+            NSString *alias = [reader readString];
+            int playerState = [reader readInt];
+            Player *player = [[Player alloc] initWithPlayerId:playerId alias:alias playerState:playerState];
+            [players addObject:player];
+        }
+        Match *match = [[Match alloc] initWithState:matchState players:players];
+        [_delegate matchStarted:match];
     }
 }
 
@@ -512,7 +549,8 @@ static NetworkController *sharedController = nil;
     if (_networkState == NetworkStatePendingMatch) {
         
         [self dismissMatchmaker];
-        // TODO: Send message to server to start match, with given player Ids
+        //Send message to server to start match, with given player Ids
+        [self sendStartMatch:playerIDs];
     }
 }
 

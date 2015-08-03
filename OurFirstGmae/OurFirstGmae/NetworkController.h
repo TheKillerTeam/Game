@@ -24,10 +24,13 @@ typedef enum {
     
 } NetworkState;
 
+@class Match;
+
 @protocol NetworkControllerDelegate
 
 - (void)networkStateChanged:(NetworkState)state;
 - (void)setNotInMatch;
+- (void)matchStarted:(Match *)match;
 
 @end
 

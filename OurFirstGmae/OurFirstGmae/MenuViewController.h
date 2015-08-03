@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "NetworkController.h"
 
+@class Match;
+
 @interface MenuViewController : UIViewController <NetworkControllerDelegate>
 
 @end

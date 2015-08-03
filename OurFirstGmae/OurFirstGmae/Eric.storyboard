@@ -28,17 +28,51 @@
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Player1Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="USV-qZ-gDF">
+                                <rect key="frame" x="250" y="202" width="99.5" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Player2Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aCE-it-e9a">
+                                <rect key="frame" x="250" y="230" width="99.5" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Player1:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yJx-sH-WnO">
+                                <rect key="frame" x="180" y="202" width="62" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Player2:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z8H-Pt-jBc">
+                                <rect key="frame" x="180" y="230" width="62" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="USV-qZ-gDF" firstAttribute="leading" secondItem="yJx-sH-WnO" secondAttribute="trailing" constant="8" id="0WW-0v-vhC"/>
                             <constraint firstAttribute="centerX" secondItem="qTv-eE-ad9" secondAttribute="centerX" id="2yI-j1-sMq"/>
                             <constraint firstAttribute="centerX" secondItem="dbZ-2c-iqJ" secondAttribute="centerX" id="4Wa-Pl-d9u"/>
                             <constraint firstItem="dbZ-2c-iqJ" firstAttribute="top" secondItem="qTv-eE-ad9" secondAttribute="bottom" constant="8" id="918-fp-x9m"/>
+                            <constraint firstItem="USV-qZ-gDF" firstAttribute="centerY" secondItem="yJx-sH-WnO" secondAttribute="centerY" id="ACk-cX-wMK"/>
+                            <constraint firstItem="aCE-it-e9a" firstAttribute="leading" secondItem="Z8H-Pt-jBc" secondAttribute="trailing" constant="8" id="DBE-46-roA"/>
+                            <constraint firstAttribute="centerX" secondItem="aCE-it-e9a" secondAttribute="centerX" id="HvP-MF-Jiz"/>
+                            <constraint firstItem="aCE-it-e9a" firstAttribute="centerY" secondItem="Z8H-Pt-jBc" secondAttribute="centerY" id="UsX-9R-HR8"/>
+                            <constraint firstItem="aCE-it-e9a" firstAttribute="top" secondItem="USV-qZ-gDF" secondAttribute="bottom" constant="8" id="b6L-qz-maY"/>
+                            <constraint firstItem="USV-qZ-gDF" firstAttribute="top" secondItem="dbZ-2c-iqJ" secondAttribute="bottom" constant="40" id="et7-G2-MJr"/>
                             <constraint firstItem="qTv-eE-ad9" firstAttribute="top" secondItem="Rd8-oj-zgc" secondAttribute="bottom" constant="80" id="g0C-0o-0kX"/>
+                            <constraint firstAttribute="centerX" secondItem="USV-qZ-gDF" secondAttribute="centerX" id="m0g-Q9-4oh"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="debugLabel" destination="qTv-eE-ad9" id="ty9-GF-x1W"/>
+                        <outlet property="player1Label" destination="USV-qZ-gDF" id="2Mv-ON-IxN"/>
+                        <outlet property="player2Label" destination="aCE-it-e9a" id="FiW-Jw-U4z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MWV-8d-QEc" userLabel="First Responder" sceneMemberID="firstResponder"/>

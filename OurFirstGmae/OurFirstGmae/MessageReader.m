@@ -13,7 +13,7 @@
 - (id)initWithData:(NSData *)data {
     
     if ((self = [super init])) {
-        _data = [NSData dataWithData:data];
+        _data = data;
         _offset = 0;
     }
     return self;

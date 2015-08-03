@@ -8,10 +8,18 @@
 
 #import "MenuViewController.h"
 #import "NetworkController.h"
+#import "Match.h"
+#import "Player.h"
 
-@interface MenuViewController ()
+@interface MenuViewController () {
+    
+    Match *_match;
+    BOOL isPlayer1;
+}
 
 @property (weak, nonatomic) IBOutlet UILabel *debugLabel;
+@property (weak, nonatomic) IBOutlet UILabel *player1Label;
+@property (weak, nonatomic) IBOutlet UILabel *player2Label;
 
 @end
 
@@ -84,6 +92,28 @@
 - (void)setNotInMatch {
     
     [[NetworkController sharedInstance] findMatchWithMinPlayers:2 maxPlayers:2 viewController:self];
+}
+
+- (void)matchStarted:(Match *)theMatch {
+    
+    _match = theMatch;
+    
+    NSLog(@"%@",_match.players);
+    Player *p1 = [_match.players objectAtIndex:0];
+    Player *p2 = [_match.players objectAtIndex:1];
+    
+    if ([p1.playerId compare:[GKLocalPlayer localPlayer].playerID] == NSOrderedSame) {
+        
+        isPlayer1 = YES;
+        
+    }else {
+        
+        isPlayer1 = NO;
+    }
+    
+    _player1Label.text = p1.alias;
+    
+    _player2Label.text = p2.alias;
 }
 
 - (void)didReceiveMemoryWarning {

@@ -13,6 +13,8 @@
 		0735BBBE1B6EB568000CFD5A /* NetworkController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0735BBBD1B6EB568000CFD5A /* NetworkController.m */; };
 		0735BBC21B6EC89D000CFD5A /* MessageWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0735BBC11B6EC89D000CFD5A /* MessageWriter.m */; };
 		0735BBC61B6ED833000CFD5A /* MessageReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0735BBC51B6ED833000CFD5A /* MessageReader.m */; };
+		0735BBCB1B6F03A1000CFD5A /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 0735BBCA1B6F03A1000CFD5A /* Player.m */; };
+		0735BBCE1B6F05B7000CFD5A /* Match.m in Sources */ = {isa = PBXBuildFile; fileRef = 0735BBCD1B6F05B7000CFD5A /* Match.m */; };
 		090E90741B673C1D002435F3 /* playerInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 090E90731B673C1D002435F3 /* playerInfoViewController.m */; };
 		093C731F1B66817800CA5400 /* play6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 093C731E1B66817800CA5400 /* play6.jpg */; };
 		09A4382E1B61288000B08E1A /* play7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 09A4382D1B61288000B08E1A /* play7.jpg */; };
@@ -54,6 +56,10 @@
 		0735BBC11B6EC89D000CFD5A /* MessageWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageWriter.m; sourceTree = "<group>"; };
 		0735BBC41B6ED833000CFD5A /* MessageReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageReader.h; sourceTree = "<group>"; };
 		0735BBC51B6ED833000CFD5A /* MessageReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageReader.m; sourceTree = "<group>"; };
+		0735BBC91B6F03A1000CFD5A /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
+		0735BBCA1B6F03A1000CFD5A /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
+		0735BBCC1B6F05B7000CFD5A /* Match.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Match.h; sourceTree = "<group>"; };
+		0735BBCD1B6F05B7000CFD5A /* Match.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Match.m; sourceTree = "<group>"; };
 		090E90721B673C1D002435F3 /* playerInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = playerInfoViewController.h; sourceTree = "<group>"; };
 		090E90731B673C1D002435F3 /* playerInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = playerInfoViewController.m; sourceTree = "<group>"; };
 		093C731E1B66817800CA5400 /* play6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = play6.jpg; sourceTree = "<group>"; };
@@ -134,6 +140,24 @@
 			name = MessageReader;
 			sourceTree = "<group>";
 		};
+		0735BBC71B6F0380000CFD5A /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				0735BBC91B6F03A1000CFD5A /* Player.h */,
+				0735BBCA1B6F03A1000CFD5A /* Player.m */,
+			);
+			name = Player;
+			sourceTree = "<group>";
+		};
+		0735BBCF1B6F05BB000CFD5A /* Match */ = {
+			isa = PBXGroup;
+			children = (
+				0735BBCC1B6F05B7000CFD5A /* Match.h */,
+				0735BBCD1B6F05B7000CFD5A /* Match.m */,
+			);
+			name = Match;
+			sourceTree = "<group>";
+		};
 		09B02BA61B6B7EC7002D8FBF /* FrameWorks */ = {
 			isa = PBXGroup;
 			children = (
@@ -209,6 +233,8 @@
 				0735BBBB1B6EB51B000CFD5A /* Network */,
 				0735BBBF1B6EC880000CFD5A /* MessageWriter */,
 				0735BBC31B6ED81E000CFD5A /* MessageReader */,
+				0735BBC71B6F0380000CFD5A /* Player */,
+				0735BBCF1B6F05BB000CFD5A /* Match */,
 				09B02BA71B6B7F01002D8FBF /* StoryBoards */,
 				09B02BA81B6B7F53002D8FBF /* Images */,
 				09B33CA71B5919EB00C9008A /* Supporting Files */,
@@ -366,6 +392,7 @@
 				09B33CAD1B5919EB00C9008A /* AppDelegate.m in Sources */,
 				09B33CAA1B5919EB00C9008A /* main.m in Sources */,
 				09B33CB31B5919EB00C9008A /* ViewController.m in Sources */,
+				0735BBCB1B6F03A1000CFD5A /* Player.m in Sources */,
 				09A438341B61507A00B08E1A /* playerCell.m in Sources */,
 				0735BBBE1B6EB568000CFD5A /* NetworkController.m in Sources */,
 				09B1EE8A1B64B3EE00E7C671 /* circleView.m in Sources */,
@@ -376,6 +403,7 @@
 				09B1EE8D1B64B63700E7C671 /* dragImageView.m in Sources */,
 				0735BBBA1B6EB4D8000CFD5A /* MenuViewController.m in Sources */,
 				09B33CB01B5919EB00C9008A /* OurFirstGmae.xcdatamodeld in Sources */,
+				0735BBCE1B6F05B7000CFD5A /* Match.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
