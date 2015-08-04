@@ -11,6 +11,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <QuartzCore/QuartzCore.h>
 #import "cropView.h"
+#import "ViewController.h"
 
 @interface playerInfoViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
@@ -99,6 +100,10 @@
 
     ImagePicker.delegate=self;
     [_crop step];
+    
+    
+    
+    
    
      [self presentViewController:ImagePicker animated:YES completion:NULL];
     
@@ -109,28 +114,53 @@
 
 
 
+//
+//- (IBAction)nextButton:(id)sender {
+//    
+////    UIGraphicsBeginImageContext(_crop.bounds.size);
+////    [_crop.layer renderInContext:UIGraphicsGetCurrentContext()];
+////    UIImage *myImage = UIGraphicsGetImageFromCurrentImageContext();
+////    UIGraphicsEndImageContext();
+////
+////    [self.delegate transImage:myImage];
+//    
+//    
+//    
+//    
+//   
+////    UIImageView *testView =[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 400, 400)];
+////    testView.image=myImage;
+////    [self.view addSubview:testView];
+////    [self.delegate transImage:myImage];
+////   
+////    
+//////    
+////    [self performSegueWithIdentifier:@"goMainView" sender:nil];
+//    
+//    
+//    
+//    
+//}
 
-- (IBAction)nextButton:(id)sender {
-    
-    UIGraphicsBeginImageContext(_crop.bounds.size);
-    [_crop.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *myImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
 
-    [self.delegate transImage:myImage];
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
-    
-    [self performSegueWithIdentifier:@"goMainView" sender:nil];
-    
+    if([segue.identifier isEqualToString:@"goMain"])
+    {
+        
+        UIGraphicsBeginImageContext(_crop.cover.bounds.size);
+        [_crop.cover.layer renderInContext:UIGraphicsGetCurrentContext()];
+        UIImage *myImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        ViewController *vc = [segue destinationViewController];
+        vc.transImage =myImage;
+        
+        
+    }
     
     
     
 }
-
--(void)transImage{
-   
-}
-
 
 
 @end

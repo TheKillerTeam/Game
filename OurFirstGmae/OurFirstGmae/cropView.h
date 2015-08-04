@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
-
+//typedef void(^PassImage)(UIImage *image);
 
 
 
@@ -19,11 +19,13 @@
     UIImageView *imageView;
     UITableView *clothFrame;
     NSArray *uniformArray ;
-    UIImageView *cover;
+   
     UIImageView *mask;
 
 }
 @property(nonatomic,retain)IBOutlet UIImage*image;
 @property(retain,nonatomic)UIImageView *clothImage;
+@property(retain,nonatomic)UIImageView *cover;
+//@property(strong,nonatomic)PassImage block;
 -(void)step;
 @end

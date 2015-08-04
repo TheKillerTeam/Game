@@ -10,16 +10,18 @@
 #import "playerCell.h"
 #import "circleView.h"
 #import "playerInfoViewController.h"
+#import "cropView.h"
 #define INPUT_BAR_HEIGHT 60
 
-@interface ViewController ()<playerInfoViewControllerDelegate>
+@interface ViewController ()
+//<playerInfoViewControllerDelegate>
 {
     UIView *inputBar;
     CGRect originframeChatBox;
     struct CGColor *oringincolorChatBox;
     dragImageView *playerImage;
     NSMutableArray *playerArray;
-    UIImage *transImage;
+
 
 }
 
@@ -102,17 +104,7 @@
     [self initImageView];
     [self fromCircleView];
     
-    
-    
-    
-    
-    
-    
-    
-    
-    playerInfoViewController *playerController = [playerInfoViewController new];
-    playerController.delegate=self;
-   
+
 }
 
 
@@ -123,20 +115,21 @@
 }
 #pragma mark cirleThePlayerImage
 
+
 -(void)initImageView{
- 
-    player1 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 50, 50)];
-    player1.image =transImage;
-    
-    player2 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 50, 50)];
+
+    player1 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
+    [player1 setImage:_transImage];
+  
+    player2 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
     player2.image = [UIImage imageNamed:@"play7.jpg"];
-    player3 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 50, 50)];
+    player3 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
     player3.image = [UIImage imageNamed:@"play7.jpg"];
-    player4 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 50, 50)];
+    player4 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
     player4.image = [UIImage imageNamed:@"play7.jpg"];
-    player5 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 50, 50)];
+    player5 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
     player5.image = [UIImage imageNamed:@"play7.jpg"];
-    player6= [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 50, 50)];
+    player6= [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
     player6.image = [UIImage imageNamed:@"play7.jpg"];
     
     
@@ -145,19 +138,6 @@
     
 }
 
--(void)transImage:(UIImage*)image{
-    
-    
-  
-   
-    UIImageView *testView =[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 400, 400)];
-    testView.image=image;
-    [self.view addSubview:testView];
-    
-    
-    
-
-}
 -(void)fromCircleView{
     circleView *circle =[[circleView alloc]initWithFrame:CGRectMake(0, 0, _thePlayerView.frame.size.width, _thePlayerView.frame.size.height)];
     circle.ImgArray  = playerArray;
@@ -344,6 +324,17 @@
 
 
 
+
+- (IBAction)finalSelectBtnPressed:(id)sender {
+    [self performTransition:UIViewAnimationOptionTransitionCrossDissolve];
+
+
+    
+    
+    
+    
+    
+}
 - (void)performTransition:(UIViewAnimationOptions)options{
     static int count = 0;
     NSArray *animationImages = @[[UIImage imageNamed:@"play6.jpg"], [UIImage imageNamed:@"play7.jpg"]];
@@ -358,16 +349,6 @@
                         [self backgroundImg]; // once finished, repeat again
                         count++; // this is to keep the reference of which image should be loaded next
                     }];
-}
-- (IBAction)finalSelectBtnPressed:(id)sender {
-    [self performTransition:UIViewAnimationOptionTransitionCrossDissolve];
-
-
-    
-    
-    
-    
-    
 }
 - (IBAction)controlListBtnPressed:(id)sender {
     

@@ -34,7 +34,7 @@
 //@property (weak, nonatomic) IBOutlet UIButton *theName;
 //@property (weak, nonatomic) IBOutlet UILabel *thevote;
 //@property (weak, nonatomic) IBOutlet UIView *thePlayerView;
-
+@property(weak,nonatomic)UIImage *transImage;
 
 @end
 
