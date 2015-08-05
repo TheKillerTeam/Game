@@ -9,6 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "dragImageView.h"
 
+//Eric
+@class Match;
+
+//Eric
+@protocol ViewControllerDelegate <NSObject>
+
+- (void)VCsetNotInMatch;
+
+@end
+
 @interface ViewController : UIViewController<UITableViewDelegate, UITableViewDataSource,NSStreamDelegate>
 {
     dragImageView *player1;
@@ -34,7 +44,12 @@
 //@property (weak, nonatomic) IBOutlet UIButton *theName;
 //@property (weak, nonatomic) IBOutlet UILabel *thevote;
 //@property (weak, nonatomic) IBOutlet UIView *thePlayerView;
+@property(weak,nonatomic)UIImage *transImage;
 
+//Eric
+@property (nonatomic, strong) Match *match;
+@property (nonatomic, weak) id<ViewControllerDelegate> delegate;
+@property (nonatomic, strong) UIImage *playerImage;
 
 @end
 

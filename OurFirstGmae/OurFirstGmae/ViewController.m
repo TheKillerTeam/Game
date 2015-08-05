@@ -9,18 +9,25 @@
 #import "ViewController.h"
 #import "playerCell.h"
 #import "circleView.h"
+#import "playerInfoViewController.h"
+#import "cropView.h"
+//#import "playerInfoViewController.h"
+
+//Eric
+#import "NetworkController.h"
+#import "Match.h"
+#import "Player.h"
 
 #define INPUT_BAR_HEIGHT 60
 
-@interface ViewController ()
-{
+@interface ViewController () <NetworkControllerDelegate> {
+    
     UIView *inputBar;
     CGRect originframeChatBox;
     struct CGColor *oringincolorChatBox;
     dragImageView *playerImage;
     NSMutableArray *playerArray;
 
-    
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *chatBoxTableView;
@@ -35,50 +42,25 @@
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImg;
 @property (weak, nonatomic) IBOutlet UIView *text;
 
-
-
-
+//Eric
+@property (weak, nonatomic) IBOutlet UILabel *debugLabel;
 
 @end
 
 @implementation ViewController
--(void)initNetworkCommunication{
-    CFReadStreamRef readStream;
-    CFWriteStreamRef writeStream;
-    CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)@"localhost", 2000, &readStream, &writeStream);
-    inputStream = (__bridge NSInputStream *)(readStream);
-    outputStream = (__bridge NSOutputStream *)(writeStream);
-    [inputStream setDelegate:self];
-    [outputStream setDelegate:self];
-    [inputStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-    [outputStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-    [inputStream open];
-    [outputStream open];
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-    
     // Do any additional setup after loading the view, typically from a nib.
     
     ////////chatBoxTableView
-  
-    [self initNetworkCommunication];
-    
-    
-    
-    
     messageData = [NSMutableArray new];
     
-
      _chatBoxTableView.backgroundColor=[UIColor colorWithWhite:1 alpha:0.5];
-    
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
    
-    
     inputBar = [[UIView alloc]initWithFrame:CGRectMake(0,CGRectGetMaxY([UIScreen mainScreen].bounds)-INPUT_BAR_HEIGHT, CGRectGetWidth([UIScreen mainScreen].bounds),INPUT_BAR_HEIGHT)];
     inputBar.backgroundColor = [UIColor grayColor];
     
@@ -87,10 +69,6 @@
     [inputBar addSubview:_extraBtn];
     inputBar.backgroundColor=[UIColor grayColor];
     [self.view addSubview:inputBar];
-    
-
-    
-
     
     //////
     
@@ -101,64 +79,59 @@
     ///////cicle
     [self initImageView];
     [self fromCircleView];
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
-   
+//    playerInfoViewController *playerController = [playerInfoViewController new];
+//    playerController.delegate=self;
+    
+    //Eric
+    [NetworkController sharedInstance].delegate = self;
+    [self networkStateChanged:[NetworkController sharedInstance].networkState];
 }
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 #pragma mark cirleThePlayerImage
 
 -(void)initImageView{
- 
-    player1 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 50, 50)];
-    player1.image = [UIImage imageNamed:@"play7.jpg"];
-    
-    player2 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 50, 50)];
+
+    player1 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
+    [player1 setImage:_transImage];
+  
+    player2 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
     player2.image = [UIImage imageNamed:@"play7.jpg"];
-    player3 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 50, 50)];
+    player3 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
     player3.image = [UIImage imageNamed:@"play7.jpg"];
-    player4 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 50, 50)];
+    player4 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
     player4.image = [UIImage imageNamed:@"play7.jpg"];
-    player5 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 50, 50)];
+    player5 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
     player5.image = [UIImage imageNamed:@"play7.jpg"];
-    player6= [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 50, 50)];
+    player6= [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
     player6.image = [UIImage imageNamed:@"play7.jpg"];
     
     
     playerArray = [[NSMutableArray alloc] initWithObjects:player1,player2,player3,player4,player5,player6, nil];
-    
-    
+}
+
+-(void)transImage:(UIImage*)image{
+   
+    UIImageView *testView =[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 400, 400)];
+    testView.image=image;
+    [self.view addSubview:testView];
+
 }
 
 -(void)fromCircleView{
+    
     circleView *circle =[[circleView alloc]initWithFrame:CGRectMake(0, 0, _thePlayerView.frame.size.width, _thePlayerView.frame.size.height)];
     circle.ImgArray  = playerArray;
     [_thePlayerView addSubview:circle];
     [circle loadView];
-    
 }
 
-
-
-
-
-
 #pragma mark ChatOnStream
-
 
 -(void)stream:(NSStream *)aStream handleEvent:(NSStreamEvent)eventCode{
     
@@ -218,15 +191,10 @@
         default:
             NSLog(@"Unknown event");
     }
-    
-    
-    
-    
-    
-    
 }
 
 -(void)getMessageFromOutput:(NSString*)mesage{
+    
     [messageData addObject:mesage];
     [_chatBoxTableView reloadData];
     
@@ -236,49 +204,50 @@
     [self.chatBoxTableView scrollToRowAtIndexPath:topIndexPath
                       atScrollPosition:UITableViewScrollPositionMiddle
                               animated:YES];
-    
-    
 }
 
-
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     playerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"customCell"];
     
     if(cell == nil){
+        
         cell = [[playerCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"customCell"];
     }
-
-        if(tableView == self.playerListTableView){
-            [cell.playerName setTitle:@"player1" forState:UIControlStateNormal];
-            cell.playerPhoto.image=[UIImage imageNamed:@"play7.jpg"];
-            cell.vote.text=@"1";
-            
     
-        }else{
-            NSString *cellMessage =[messageData objectAtIndex:indexPath.row];
-            cell.textLabel.text =cellMessage;
-        }
+    if (tableView == self.playerListTableView){
 
- 
-    return  cell;
+        Player *p = [_match.players objectAtIndex:indexPath.row];
+        
+        cell.playerPhoto.image = _playerImage;
+        cell.playerName.text = [NSString stringWithFormat:@"%ld: %@",indexPath.row+1, p.alias];
+        cell.vote.text = 0;
+
+    }else{
+
+        NSString *cellMessage =[messageData objectAtIndex:indexPath.row];
+        cell.textLabel.text =cellMessage;
+    }
+
+    return cell;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    
     return 1;
 }
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if(tableView == self.playerListTableView){
-        return 5;
+    
+    if (tableView == self.playerListTableView){
+        
+        return _match.players.count;
+        
     }else{
 
-    return messageData.count;
+        return messageData.count;
     }
 }
-
-
-
-
 
 -(void)keyboardWillChangeFrame:(NSNotification*)notify{
 
@@ -287,30 +256,17 @@
     CGFloat transFromY = keyboardRect.origin.y - self.view.frame.size.height;
     CGFloat tableTransFromY = CGRectGetMinY([UIScreen mainScreen].bounds)-_chatBoxTableView.frame.origin.y;
 
-    
     [UIView beginAnimations:@"animation2" context:nil];
     [UIView animateWithDuration:durationTime animations:^{
-  
         
         inputBar.transform=CGAffineTransformMakeTranslation(0, transFromY);
-        
-       
-        }];
-    [UIView animateWithDuration:durationTime animations:^{
-          _chatBoxTableView.transform =CGAffineTransformMakeTranslation(0, transFromY);
- 
-        
-
-       
-      
-
         }];
     
+    [UIView animateWithDuration:durationTime animations:^{
+        
+          _chatBoxTableView.transform =CGAffineTransformMakeTranslation(0, transFromY);
+        }];
 }
-
-
-
-
 
 - (IBAction)sentBtnPressed:(id)sender {
     
@@ -318,19 +274,19 @@
     NSData *datas = [[NSData alloc]initWithData:[response dataUsingEncoding:NSASCIIStringEncoding]];
     [outputStream write:[datas bytes] maxLength:[datas length]];
     _theTextField.text=@"";
+    
     if (self.resignFirstResponderWhenSend) {
+        
         [self resignFirstResponder];
     }
-    
-    
 }
+
 - (IBAction)extraBtnPressed:(id)sender {
+    
 }
-
-
-
 
 - (void)performTransition:(UIViewAnimationOptions)options{
+    
     static int count = 0;
     NSArray *animationImages = @[[UIImage imageNamed:@"play6.jpg"], [UIImage imageNamed:@"play7.jpg"]];
     UIImage *image = [animationImages objectAtIndex:(count % [animationImages count])];
@@ -345,16 +301,12 @@
                         count++; // this is to keep the reference of which image should be loaded next
                     }];
 }
+
 - (IBAction)finalSelectBtnPressed:(id)sender {
+    
     [self performTransition:UIViewAnimationOptionTransitionCrossDissolve];
-
-
-    
-    
-    
-    
-    
 }
+
 - (IBAction)controlListBtnPressed:(id)sender {
     
     [UIView beginAnimations:@"animation1" context:nil];
@@ -362,32 +314,99 @@
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
     [UIView setAnimationTransition:UIViewAnimationTransitionNone forView:_playerListTableView cache:YES];
     
-    
         NSLog(@"_playerListTableViewX=%f",_playerListTableView.frame.origin.x);
     NSLog(@"_playerListTableViewY=%f",_playerListTableView.frame.origin.y);
     CGRect frame = _playerListTableView.frame;
     
-    if(frame.origin.y<0)
-    {
+    if(frame.origin.y<0) {
+
         frame.origin.y =20;
-    }else
-    {
-        frame.origin.y -=frame.size.height+20;
         
+    }else {
+        
+        frame.origin.y -=frame.size.height+20;
     }
+    
     NSLog(@"frame=%f",frame.origin.y);
     _playerListTableView.frame =frame;
     
     [UIView commitAnimations];
-    
-    
-    
 }
 
 -(BOOL)resignFirstResponderWhenSend{
+    
     [self.theTextField resignFirstResponder];
     return [super resignFirstResponder];
 }
 
+//Eric
+#pragma mark - NetworkControllerDelegate
+
+- (void)networkStateChanged:(NetworkState)networkState {
+    
+    switch(networkState) {
+            
+        case NetworkStateNotAvailable:
+            
+            _debugLabel.text = @"Not Available";
+            break;
+            
+        case NetworkStatePendingAuthentication:
+            
+            _debugLabel.text = @"Pending Authentication";
+            break;
+            
+        case NetworkStateAuthenticated:
+            
+            _debugLabel.text = @"Authenticated";
+            break;
+            
+        case NetworkStateConnectingToServer:
+            
+            _debugLabel.text = @"Connecting to Server";
+            break;
+            
+        case NetworkStateConnected:
+            
+            _debugLabel.text = @"Connected";
+            break;
+            
+        case NetworkStatePendingMatchStatus:
+            
+            _debugLabel.text = @"Pending Match Status";
+            break;
+            
+        case NetworkStateReceivedMatchStatus:
+            
+            _debugLabel.text = @"Received Match Status,\nReady to Look for a Match";
+            break;
+            
+        case NetworkStatePendingMatch:
+            
+            _debugLabel.text = @"Pending Match";
+            break;
+            
+        case NetworkStatePendingMatchStart:
+            
+            _debugLabel.text = @"Pending Start";
+            break;
+            
+        case NetworkStateMatchActive:
+            
+            _debugLabel.text = @"Match Active";
+            break;
+    }
+}
+
+- (void)setNotInMatch {
+    
+    [_delegate VCsetNotInMatch];
+    
+    [self dismissViewControllerAnimated:self completion:nil];
+}
+
+- (void)matchStarted:(Match *)match {
+    
+}
 
 @end

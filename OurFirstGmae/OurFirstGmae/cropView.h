@@ -9,12 +9,23 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
-@interface cropView : UIView
+//typedef void(^PassImage)(UIImage *image);
+
+
+
+@interface cropView : UIView<UITableViewDataSource,UITableViewDelegate>
 {
-      UIView *mask;
+//    UIImageView *mask;
     UIImageView *imageView;
+    UITableView *clothFrame;
+    NSArray *uniformArray ;
+   
+    UIImageView *mask;
 
 }
 @property(nonatomic,retain)IBOutlet UIImage*image;
+@property(retain,nonatomic)UIImageView *clothImage;
+@property(retain,nonatomic)UIImageView *cover;
+//@property(strong,nonatomic)PassImage block;
 -(void)step;
 @end
