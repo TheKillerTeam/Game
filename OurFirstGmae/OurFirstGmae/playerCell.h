@@ -10,7 +10,7 @@
 
 @interface playerCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *playerPhoto;
-@property (weak, nonatomic) IBOutlet UIButton *playerName;
+@property (weak, nonatomic) IBOutlet UILabel *playerName;
 @property (weak, nonatomic) IBOutlet UILabel *vote;
 
 @end

@@ -6,21 +6,25 @@
 //  Copyright (c) 2015年 CAI CHENG-HONG. All rights reserved.
 //
 
-//TODO: 1.投票 2.聊天 3.結束遊戲 4.結束後再重新開始 5.斷線重聯 6.邀請好友
+//TODO: 1.投票 2.聊天 3.結束遊戲 4.結束後再重新開始 5.斷線重聯 6.邀請好友 7.縮小App不會斷線
 
 #import "MenuViewController.h"
 #import "NetworkController.h"
 #import "Match.h"
 #import "Player.h"
 #import "TestGameViewController.h"
+#import "playerInfoViewController.h"
+#import "ViewController.h"
+
 
 #define MIN_PLAYER_COUNTS 2
 #define MAX_PLAYER_COUNTS 16
 
-@interface MenuViewController () <NetworkControllerDelegate, UIPickerViewDataSource, UIPickerViewDelegate, TestGameViewControllerDelegate> {
+@interface MenuViewController () <NetworkControllerDelegate, UIPickerViewDataSource, UIPickerViewDelegate, TestGameViewControllerDelegate, playerInfoViewControllerDelegate, ViewControllerDelegate> {
     
     Match *_match;
     int playerCounts;
+    UIImage *playerImage;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *debugLabel;
@@ -62,14 +66,16 @@
     }
     else if (_notInMatch) {
         
-        [[NetworkController sharedInstance] findMatchWithMinPlayers:playerCounts maxPlayers:playerCounts viewController:self];
+//        [[NetworkController sharedInstance] findMatchWithMinPlayers:playerCounts maxPlayers:playerCounts viewController:self];
+        
+        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        playerInfoViewController *vc = [sb instantiateViewControllerWithIdentifier:@"playerSetView"];
+        
+        vc.playerCounts = playerCounts;
+        vc.delegate = self;
+        
+        [self presentViewController:vc animated:true completion:nil];
     }
-}
-#pragma mark - TestGameViewControllerDelegate
-
-- (void)TGVCsetNotInMatch {
-    
-    _notInMatch = true;
 }
 
 #pragma mark - NetworkControllerDelegate
@@ -137,23 +143,56 @@
 
 - (void)matchStarted:(Match *)match {
     
+//    _notInMatch = false;
+//    _match = match;
+//    
+//    Player *p1 = [_match.players objectAtIndex:0];
+//    Player *p2 = [_match.players objectAtIndex:1];
+//    
+//    _player1Label.text = p1.alias;
+//    _player2Label.text = p2.alias;
+//    
+//    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Eric" bundle:nil];
+//    TestGameViewController *vc = [sb instantiateViewControllerWithIdentifier:@"TestGameViewController"];
+//    
+//    vc.match = match;
+//    
+//    vc.delegate = self;
+//
+//    [self presentViewController:vc animated:true completion:nil];
+    
     _notInMatch = false;
-    _match = match;
-    
-    Player *p1 = [_match.players objectAtIndex:0];
-    Player *p2 = [_match.players objectAtIndex:1];
-    
-    _player1Label.text = p1.alias;
-    _player2Label.text = p2.alias;
-    
-    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Eric" bundle:nil];
-    TestGameViewController *vc = [sb instantiateViewControllerWithIdentifier:@"TestGameViewController"];
+
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    ViewController *vc = [sb instantiateViewControllerWithIdentifier:@"mainView"];
     
     vc.match = match;
-    
     vc.delegate = self;
-
+    
+    vc.playerImage = playerImage;
+    
     [self presentViewController:vc animated:true completion:nil];
+}
+
+#pragma mark - TestGameViewControllerDelegate
+
+- (void)TGVCsetNotInMatch {
+    
+    _notInMatch = true;
+}
+
+#pragma mark - playerInfoViewControllerDelegate
+
+- (void)transImage:(UIImage *)image {
+    
+    playerImage = image;
+}
+
+#pragma mark - ViewControllerDelegate
+
+- (void)VCsetNotInMatch {
+    
+    _notInMatch = true;
 }
 
 #pragma mark - UIPickerView

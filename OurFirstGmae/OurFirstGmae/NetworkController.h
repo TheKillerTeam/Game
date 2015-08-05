@@ -11,16 +11,16 @@
 
 typedef enum {
     
-    NetworkStateNotAvailable,
-    NetworkStatePendingAuthentication,
-    NetworkStateAuthenticated,
-    NetworkStateConnectingToServer,
-    NetworkStateConnected,
-    NetworkStatePendingMatchStatus,
-    NetworkStateReceivedMatchStatus,
-    NetworkStatePendingMatch,
-    NetworkStatePendingMatchStart,
-    NetworkStateMatchActive,
+    NetworkStateNotAvailable = 0,
+    NetworkStatePendingAuthentication = 1,
+    NetworkStateAuthenticated = 2,
+    NetworkStateConnectingToServer = 3,
+    NetworkStateConnected = 4,
+    NetworkStatePendingMatchStatus = 5,
+    NetworkStateReceivedMatchStatus = 6,
+    NetworkStatePendingMatch = 7,
+    NetworkStatePendingMatchStart = 8,
+    NetworkStateMatchActive = 9,
     
 } NetworkState;
 

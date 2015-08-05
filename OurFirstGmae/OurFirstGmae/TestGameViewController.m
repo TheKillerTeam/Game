@@ -30,6 +30,10 @@
     [self networkStateChanged:[NetworkController sharedInstance].networkState];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -100,6 +104,10 @@
     [self dismissViewControllerAnimated:self completion:nil];
 }
 
+- (void)matchStarted:(Match *)match {
+    
+}
+
 #pragma mark - UITableViewDelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -111,6 +119,7 @@
     }else if (tableView == _testChatTableView) {
         
         return 0;
+        
     }else {
         
         return 0;

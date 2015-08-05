@@ -12,7 +12,7 @@
 #import "Match.h"
 #import "Player.h"
 
-#define SERVER_IP @"220.134.136.189"
+#define SERVER_IP @"192.168.196.210"
 
 typedef enum {
     
