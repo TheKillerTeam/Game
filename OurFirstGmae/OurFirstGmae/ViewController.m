@@ -285,17 +285,6 @@
     
 }
 
-
-- (IBAction)finalSelectBtnPressed:(id)sender {
-    [self performTransition:UIViewAnimationOptionTransitionCrossDissolve];
-
-
-    
-    
-    
-    
-    
-}
 - (void)performTransition:(UIViewAnimationOptions)options{
     
     static int count = 0;
