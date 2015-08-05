@@ -194,6 +194,7 @@
                             </mask>
                         </variation>
                     </view>
+                    <navigationItem key="navigationItem" id="1kD-dR-T59"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="backgroundImg" destination="jbY-fX-qqu" id="dCM-Nl-DSM"/>
@@ -254,31 +255,6 @@
                                     <constraint firstAttribute="width" constant="240" id="h47-R3-77o"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Vo-G6-chs">
-                                <rect key="frame" x="260" y="0.0" width="115" height="115"/>
-                                <color key="backgroundColor" red="0.7843209663129137" green="1" blue="0.88689139987906329" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="115" id="G2T-yO-lSv"/>
-                                    <constraint firstAttribute="height" constant="115" id="ULc-YL-NhS"/>
-                                    <constraint firstAttribute="width" secondItem="0Vo-G6-chs" secondAttribute="height" multiplier="1:1" id="d4R-HV-ZNp"/>
-                                    <constraint firstAttribute="width" constant="115" id="n4u-t2-DHv"/>
-                                    <constraint firstAttribute="width" constant="115" id="rc9-We-FO4"/>
-                                </constraints>
-                                <state key="normal" title="next">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="G2T-yO-lSv"/>
-                                        <exclude reference="ULc-YL-NhS"/>
-                                        <exclude reference="n4u-t2-DHv"/>
-                                        <exclude reference="rc9-We-FO4"/>
-                                    </mask>
-                                </variation>
-                                <connections>
-                                    <action selector="nextButton:" destination="fAw-U7-6oQ" eventType="touchUpInside" id="NeV-hl-dqz"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oxo-w7-Dhu" customClass="cropView">
                                 <rect key="frame" x="0.0" y="123" width="375" height="544"/>
                                 <color key="backgroundColor" red="0.97789034250062812" green="1" blue="0.58895431198451487" alpha="1" colorSpace="calibratedRGB"/>
@@ -307,6 +283,31 @@
                                 </variation>
                                 <connections>
                                     <action selector="album:" destination="fAw-U7-6oQ" eventType="touchUpInside" id="Ibm-MW-nLp"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Vo-G6-chs">
+                                <rect key="frame" x="260" y="0.0" width="115" height="115"/>
+                                <color key="backgroundColor" red="0.7843209663129137" green="1" blue="0.88689139987906329" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="115" id="G2T-yO-lSv"/>
+                                    <constraint firstAttribute="height" constant="115" id="ULc-YL-NhS"/>
+                                    <constraint firstAttribute="width" secondItem="0Vo-G6-chs" secondAttribute="height" multiplier="1:1" id="d4R-HV-ZNp"/>
+                                    <constraint firstAttribute="width" constant="115" id="n4u-t2-DHv"/>
+                                    <constraint firstAttribute="width" constant="115" id="rc9-We-FO4"/>
+                                </constraints>
+                                <state key="normal" title="next">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="G2T-yO-lSv"/>
+                                        <exclude reference="ULc-YL-NhS"/>
+                                        <exclude reference="n4u-t2-DHv"/>
+                                        <exclude reference="rc9-We-FO4"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="goMain" id="DEg-14-OYd"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zud-gQ-Ou9">
@@ -403,7 +404,6 @@
                         <outlet property="crop" destination="oxo-w7-Dhu" id="ZEq-Ov-ivK"/>
                         <outlet property="debugLabel" destination="zud-gQ-Ou9" id="0RK-dT-qHA"/>
                         <outlet property="playPhoto" destination="qNs-Aw-sFV" id="4Eu-Pi-A2e"/>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="goMainView" id="0NA-OX-kSA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5UU-an-Nf1" userLabel="First Responder" sceneMemberID="firstResponder"/>

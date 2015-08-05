@@ -9,6 +9,8 @@
 #import "ViewController.h"
 #import "playerCell.h"
 #import "circleView.h"
+#import "playerInfoViewController.h"
+#import "cropView.h"
 //#import "playerInfoViewController.h"
 
 //Eric
@@ -25,7 +27,6 @@
     struct CGColor *oringincolorChatBox;
     dragImageView *playerImage;
     NSMutableArray *playerArray;
-    UIImage *transImage;
 
 }
 
@@ -95,19 +96,19 @@
 #pragma mark cirleThePlayerImage
 
 -(void)initImageView{
- 
-    player1 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 50, 50)];
-    player1.image =transImage;
-    
-    player2 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 50, 50)];
+
+    player1 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
+    [player1 setImage:_transImage];
+  
+    player2 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
     player2.image = [UIImage imageNamed:@"play7.jpg"];
-    player3 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 50, 50)];
+    player3 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
     player3.image = [UIImage imageNamed:@"play7.jpg"];
-    player4 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 50, 50)];
+    player4 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
     player4.image = [UIImage imageNamed:@"play7.jpg"];
-    player5 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 50, 50)];
+    player5 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
     player5.image = [UIImage imageNamed:@"play7.jpg"];
-    player6= [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 50, 50)];
+    player6= [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
     player6.image = [UIImage imageNamed:@"play7.jpg"];
     
     
@@ -284,6 +285,17 @@
     
 }
 
+
+- (IBAction)finalSelectBtnPressed:(id)sender {
+    [self performTransition:UIViewAnimationOptionTransitionCrossDissolve];
+
+
+    
+    
+    
+    
+    
+}
 - (void)performTransition:(UIViewAnimationOptions)options{
     
     static int count = 0;

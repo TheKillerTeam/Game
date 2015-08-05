@@ -11,6 +11,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <QuartzCore/QuartzCore.h>
 #import "cropView.h"
+#import "ViewController.h"
 
 //Eric
 #import "NetworkController.h"

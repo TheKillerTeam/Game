@@ -34,9 +34,9 @@
      uniformArray = @[[UIImage imageNamed:@"play6.jpg"],[UIImage imageNamed:@"play7.jpg"]];
     self.clipsToBounds =YES;
     
-    cover= [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width,self.frame.size.height-200)];
-    cover.backgroundColor=[UIColor whiteColor];
-    [self addSubview:cover];
+    _cover= [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width,self.frame.size.height-150)];
+    _cover.backgroundColor=[UIColor clearColor];
+    [self addSubview:_cover];
     
     
     
@@ -46,7 +46,7 @@
     mask.center= CGPointMake(self.frame.size.width/2, self.frame.size.height/2-200);
     mask.layer.cornerRadius=RADIUS;
     mask.layer.masksToBounds=YES;
-    mask.clipsToBounds=NO;
+    mask.clipsToBounds=YES;
    
     
     
@@ -54,7 +54,7 @@
     mask.layer.borderColor=[UIColor redColor].CGColor;
     mask.layer.backgroundColor=[UIColor whiteColor].CGColor;
     mask.userInteractionEnabled= YES;
-    [self addSubview:mask];
+    [_cover addSubview:mask];
  
     
     
@@ -104,7 +104,7 @@
     _clothImage.frame = frame;
     
 
-    [self insertSubview:_clothImage belowSubview:mask];
+    [_cover insertSubview:_clothImage belowSubview:mask];
     
     button= [UIButton buttonWithType:UIButtonTypeCustom];
     [button setTitle:@"add" forState:UIControlStateNormal];
@@ -234,18 +234,17 @@
 }
 
 -(void)btnPressed{
-    UIGraphicsBeginImageContext(self.bounds.size);
-    [self.layer renderInContext:UIGraphicsGetCurrentContext()];
+   
+    UIGraphicsBeginImageContext(_cover.bounds.size);
+    [_cover.layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *myImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
-    UIImageView *testView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 400, 400)];
+    UIImageView *testView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 100,100)];
     
     testView.image = myImage;
     [self addSubview:testView];
     
-    
-
 }
 
 
