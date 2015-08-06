@@ -25,9 +25,8 @@
     UIView *inputBar;
     CGRect originframeChatBox;
     struct CGColor *oringincolorChatBox;
-    dragImageView *playerImage;
-    NSMutableArray *playerArray;
-
+    
+    NSMutableArray *playerDragImageViewArray;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *chatBoxTableView;
@@ -97,22 +96,17 @@
 
 -(void)initImageView{
 
-    player1 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
-    [player1 setImage:_transImage];
-  
-    player2 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
-    player2.image = [UIImage imageNamed:@"play7.jpg"];
-    player3 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
-    player3.image = [UIImage imageNamed:@"play7.jpg"];
-    player4 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
-    player4.image = [UIImage imageNamed:@"play7.jpg"];
-    player5 = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
-    player5.image = [UIImage imageNamed:@"play7.jpg"];
-    player6= [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
-    player6.image = [UIImage imageNamed:@"play7.jpg"];
+    dragImageView *tempDragImageView;
+    playerDragImageViewArray = [NSMutableArray new];
     
-    
-    playerArray = [[NSMutableArray alloc] initWithObjects:player1,player2,player3,player4,player5,player6, nil];
+    for (Player *player in self.match.players) {
+        
+        tempDragImageView = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
+        //TODO:change image according to player
+        tempDragImageView.image = [UIImage imageNamed:@"play7.jpg"];
+        
+        [playerDragImageViewArray addObject:tempDragImageView];
+    }
 }
 
 -(void)transImage:(UIImage*)image{
@@ -126,7 +120,7 @@
 -(void)fromCircleView{
     
     circleView *circle =[[circleView alloc]initWithFrame:CGRectMake(0, 0, _thePlayerView.frame.size.width, _thePlayerView.frame.size.height)];
-    circle.ImgArray  = playerArray;
+    circle.ImgArray  = playerDragImageViewArray;
     [_thePlayerView addSubview:circle];
     [circle loadView];
 }
@@ -219,7 +213,7 @@
 
         Player *p = [_match.players objectAtIndex:indexPath.row];
         
-        cell.playerPhoto.image = _playerImage;
+        cell.playerPhoto.image = p.playerImage;
         cell.playerName.text = [NSString stringWithFormat:@"%ld: %@",indexPath.row+1, p.alias];
         cell.vote.text = 0;
 
@@ -254,7 +248,6 @@
     CGRect keyboardRect = [notify.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGFloat durationTime = [notify.userInfo[UIKeyboardAnimationDurationUserInfoKey]floatValue];
     CGFloat transFromY = keyboardRect.origin.y - self.view.frame.size.height;
-    CGFloat tableTransFromY = CGRectGetMinY([UIScreen mainScreen].bounds)-_chatBoxTableView.frame.origin.y;
 
     [UIView beginAnimations:@"animation2" context:nil];
     [UIView animateWithDuration:durationTime animations:^{
@@ -379,6 +372,7 @@
         case NetworkStateReceivedMatchStatus:
             
             _debugLabel.text = @"Received Match Status,\nReady to Look for a Match";
+            [self dismissViewControllerAnimated:self completion:nil];
             break;
             
         case NetworkStatePendingMatch:
@@ -396,13 +390,6 @@
             _debugLabel.text = @"Match Active";
             break;
     }
-}
-
-- (void)setNotInMatch {
-    
-    [_delegate VCsetNotInMatch];
-    
-    [self dismissViewControllerAnimated:self completion:nil];
 }
 
 - (void)matchStarted:(Match *)match {

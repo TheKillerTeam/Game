@@ -12,7 +12,7 @@
 #import "Match.h"
 #import "Player.h"
 
-#define SERVER_IP @"192.168.196.210"
+#define SERVER_IP @"192.168.196.206"
 
 typedef enum {
     
@@ -135,6 +135,12 @@ static NetworkController *sharedController = nil;
     MessageWriter * writer = [MessageWriter new];
     
     [writer writeByte:MessagePlayerConnected];
+    
+    UIImage *img = [UIImage imageNamed:@"news3.jpg"];
+    NSData *imageData = UIImageJPEGRepresentation(img, 1.0f);
+    NSString *base64string = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    [writer writeString:base64string];
+    
     [writer writeString:[GKLocalPlayer localPlayer].playerID];
     [writer writeString:[GKLocalPlayer localPlayer].alias];
     [writer writeByte:continueMatch];
@@ -166,7 +172,6 @@ static NetworkController *sharedController = nil;
     if (msgType == MessageNotInMatch) {
         
         [self setNetworkState:NetworkStateReceivedMatchStatus];
-        [_delegate setNotInMatch];
         
     }else if (msgType == MessageMatchStarted) {
         
@@ -178,10 +183,11 @@ static NetworkController *sharedController = nil;
         
         for (unsigned char i = 0; i < numPlayers; ++i) {
             
+            NSString *playerImageString = [reader readString];
             NSString *playerId = [reader readString];
             NSString *alias = [reader readString];
             int playerState = [reader readInt];
-            Player *player = [[Player alloc] initWithPlayerId:playerId alias:alias playerState:playerState];
+            Player *player = [[Player alloc] initWithPlayerImageString:playerImageString playerId:playerId alias:alias playerState:playerState];
             [players addObject:player];
         }
         Match *match = [[Match alloc] initWithState:matchState players:players];
@@ -217,7 +223,7 @@ static NetworkController *sharedController = nil;
 
 - (void)disconnect {
     
-    [self setNetworkState:NetworkStateConnectingToServer];
+    [self setNetworkState:NetworkStateAuthenticated];
     
     if (_inputStream != nil) {
         

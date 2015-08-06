@@ -12,29 +12,14 @@
 //Eric
 @class Match;
 
-//Eric
-@protocol ViewControllerDelegate <NSObject>
-
-- (void)VCsetNotInMatch;
-
-@end
-
-@interface ViewController : UIViewController<UITableViewDelegate, UITableViewDataSource,NSStreamDelegate>
-{
-    dragImageView *player1;
-    dragImageView *player2;
-    dragImageView *player3;
-    dragImageView *player4;
-    dragImageView *player5;
-    dragImageView *player6;
-    
+@interface ViewController : UIViewController<UITableViewDelegate, UITableViewDataSource,NSStreamDelegate> {
     
     NSInputStream *inputStream;
     NSOutputStream *outputStream;
     NSMutableArray *messageData;
 //    UIView *inputBar;
-
 }
+
 //@property (weak, nonatomic) IBOutlet UITableView *chatBoxTableView;
 //@property (weak, nonatomic) IBOutlet UITableView *playerListTableView;
 //@property (weak, nonatomic) IBOutlet UITextField *theTextField;
@@ -48,7 +33,6 @@
 
 //Eric
 @property (nonatomic, strong) Match *match;
-@property (nonatomic, weak) id<ViewControllerDelegate> delegate;
 @property (nonatomic, strong) UIImage *playerImage;
 
 @end

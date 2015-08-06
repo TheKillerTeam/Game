@@ -87,23 +87,43 @@
                                     <constraint firstItem="d2Y-yL-hbW" firstAttribute="leading" secondItem="sqt-50-Wzy" secondAttribute="leading" id="lyx-bM-HD4"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mPg-G6-2qw">
+                                <rect key="frame" x="250" y="280" width="99" height="30"/>
+                                <state key="normal" title="Edit Character">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="editCharacterButtonPressed:" destination="5Uj-2L-7xS" eventType="touchUpInside" id="y12-Lp-agc"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qXv-Fh-7X2">
+                                <rect key="frame" x="200" y="318" width="200" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="MZ7-gG-lma"/>
+                                    <constraint firstAttribute="width" constant="200" id="uUg-u2-fyE"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="USV-qZ-gDF" firstAttribute="leading" secondItem="yJx-sH-WnO" secondAttribute="trailing" constant="8" id="0WW-0v-vhC"/>
+                            <constraint firstItem="qXv-Fh-7X2" firstAttribute="top" secondItem="mPg-G6-2qw" secondAttribute="bottom" constant="8" id="1rh-fH-EMS"/>
                             <constraint firstAttribute="centerX" secondItem="qTv-eE-ad9" secondAttribute="centerX" id="2yI-j1-sMq"/>
                             <constraint firstAttribute="centerX" secondItem="dbZ-2c-iqJ" secondAttribute="centerX" id="4Wa-Pl-d9u"/>
                             <constraint firstItem="dbZ-2c-iqJ" firstAttribute="top" secondItem="qTv-eE-ad9" secondAttribute="bottom" constant="8" id="918-fp-x9m"/>
                             <constraint firstItem="USV-qZ-gDF" firstAttribute="centerY" secondItem="yJx-sH-WnO" secondAttribute="centerY" id="ACk-cX-wMK"/>
                             <constraint firstItem="USV-qZ-gDF" firstAttribute="top" secondItem="sqt-50-Wzy" secondAttribute="bottom" constant="16" id="BYj-O0-XZa"/>
                             <constraint firstItem="aCE-it-e9a" firstAttribute="leading" secondItem="Z8H-Pt-jBc" secondAttribute="trailing" constant="8" id="DBE-46-roA"/>
+                            <constraint firstAttribute="centerX" secondItem="qXv-Fh-7X2" secondAttribute="centerX" id="Ecb-ig-KMR"/>
                             <constraint firstAttribute="centerX" secondItem="sqt-50-Wzy" secondAttribute="centerX" id="GeC-c4-ea0"/>
                             <constraint firstItem="sqt-50-Wzy" firstAttribute="top" secondItem="dbZ-2c-iqJ" secondAttribute="bottom" constant="16" id="H8I-uQ-evD"/>
                             <constraint firstAttribute="centerX" secondItem="aCE-it-e9a" secondAttribute="centerX" id="HvP-MF-Jiz"/>
+                            <constraint firstAttribute="centerX" secondItem="mPg-G6-2qw" secondAttribute="centerX" id="QXM-GG-0Z2"/>
                             <constraint firstItem="aCE-it-e9a" firstAttribute="centerY" secondItem="Z8H-Pt-jBc" secondAttribute="centerY" id="UsX-9R-HR8"/>
                             <constraint firstItem="aCE-it-e9a" firstAttribute="top" secondItem="USV-qZ-gDF" secondAttribute="bottom" constant="8" id="b6L-qz-maY"/>
                             <constraint firstItem="qTv-eE-ad9" firstAttribute="top" secondItem="Rd8-oj-zgc" secondAttribute="bottom" constant="80" id="g0C-0o-0kX"/>
                             <constraint firstAttribute="centerX" secondItem="USV-qZ-gDF" secondAttribute="centerX" id="m0g-Q9-4oh"/>
+                            <constraint firstItem="mPg-G6-2qw" firstAttribute="top" secondItem="aCE-it-e9a" secondAttribute="bottom" constant="8" id="tJx-aR-6Le"/>
                         </constraints>
                     </view>
                     <connections>
@@ -111,6 +131,7 @@
                         <outlet property="player1Label" destination="USV-qZ-gDF" id="2Mv-ON-IxN"/>
                         <outlet property="player2Label" destination="aCE-it-e9a" id="FiW-Jw-U4z"/>
                         <outlet property="playerCountsPickerView" destination="j1u-GQ-EYa" id="wWT-WR-56H"/>
+                        <outlet property="playerImageImageView" destination="qXv-Fh-7X2" id="Waz-Eo-rDc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MWV-8d-QEc" userLabel="First Responder" sceneMemberID="firstResponder"/>
