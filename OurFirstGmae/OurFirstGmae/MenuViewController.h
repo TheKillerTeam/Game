@@ -11,6 +11,4 @@
 
 @interface MenuViewController : UIViewController
 
-@property (nonatomic, assign) BOOL notInMatch;
-
 @end

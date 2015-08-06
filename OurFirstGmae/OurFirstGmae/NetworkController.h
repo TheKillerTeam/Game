@@ -29,7 +29,6 @@ typedef enum {
 @protocol NetworkControllerDelegate
 
 - (void)networkStateChanged:(NetworkState)networkState;
-- (void)setNotInMatch;
 - (void)matchStarted:(Match *)match;
 
 @end
@@ -43,6 +42,7 @@ typedef enum {
 
 + (NetworkController *)sharedInstance;
 - (void)authenticateLocalUser;
+- (void)connect;
 - (void)findMatchWithMinPlayers:(int)minPlayers maxPlayers:(int)maxPlayers
                  viewController:(UIViewController *)viewController;
 

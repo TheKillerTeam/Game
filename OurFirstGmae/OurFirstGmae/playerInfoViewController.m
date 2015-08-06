@@ -107,10 +107,31 @@
     UIImage *myImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
-    [self.delegate transImage:myImage];
-        
+    UIImage *img = [UIImage imageNamed:@"news3.jpg"];
+    
+    NSData *imageData = UIImageJPEGRepresentation(img, 1.0f);
+
+    //encode it
+    NSString *base64string = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    
+    NSLog(@"%@", base64string);
+    
+    //decode it
+    NSData *back = [[NSData alloc] initWithBase64EncodedString:base64string options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    
+    UIImage *characterImage = [UIImage imageWithData:back];
+    
+//    [self.delegate transImage:myImage];
+    [self.delegate transImage:characterImage];
+
     //Eric
-    [[NetworkController sharedInstance] findMatchWithMinPlayers:_playerCounts maxPlayers:_playerCounts viewController:[[[UIApplication sharedApplication] keyWindow] rootViewController]];
+//    [[NetworkController sharedInstance] findMatchWithMinPlayers:_playerCounts maxPlayers:_playerCounts viewController:[[[UIApplication sharedApplication] keyWindow] rootViewController]];
+    
+//    if ([NetworkController sharedInstance].networkState == NetworkStateAuthenticated) {
+//
+//        [[NetworkController sharedInstance] connect];
+//    }
+    [self dismissViewControllerAnimated:true completion:nil];
 }
 
 //Eric
@@ -170,10 +191,6 @@
             _debugLabel.text = @"Match Active";
             break;
     }
-}
-
-- (void)setNotInMatch {
-    
 }
 
 - (void)matchStarted:(Match *)match {

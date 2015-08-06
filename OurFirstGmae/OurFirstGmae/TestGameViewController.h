@@ -10,15 +10,8 @@
 
 @class Match;
 
-@protocol TestGameViewControllerDelegate <NSObject>
-
-- (void)TGVCsetNotInMatch;
-
-@end
-
 @interface TestGameViewController : UIViewController
 
 @property (nonatomic, strong) Match *match;
-@property (nonatomic, weak) id<TestGameViewControllerDelegate> delegate;
 
 @end

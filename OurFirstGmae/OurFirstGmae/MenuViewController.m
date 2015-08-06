@@ -6,7 +6,8 @@
 //  Copyright (c) 2015年 CAI CHENG-HONG. All rights reserved.
 //
 
-//TODO: 1.投票 2.聊天 3.結束遊戲 4.結束後再重新開始 5.斷線重聯 6.邀請好友 7.縮小App不會斷線
+//TODO: 1.投票 2.聊天 3.結束遊戲 4.結束後再重新開始 5.斷線重聯 6.邀請好友 7.縮小App不會斷線 8.追蹤是否有網路連線
+//9.編輯外觀時由之前的結果開始編輯 10.編輯外觀新增返回按鈕 11.離開伺服器重連後伺服器上的玩家資訊不會更新
 
 #import "MenuViewController.h"
 #import "NetworkController.h"
@@ -20,7 +21,7 @@
 #define MIN_PLAYER_COUNTS 2
 #define MAX_PLAYER_COUNTS 16
 
-@interface MenuViewController () <NetworkControllerDelegate, UIPickerViewDataSource, UIPickerViewDelegate, TestGameViewControllerDelegate, playerInfoViewControllerDelegate, ViewControllerDelegate> {
+@interface MenuViewController () <NetworkControllerDelegate, UIPickerViewDataSource, UIPickerViewDelegate, playerInfoViewControllerDelegate> {
     
     Match *_match;
     int playerCounts;
@@ -31,6 +32,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *player1Label;
 @property (weak, nonatomic) IBOutlet UILabel *player2Label;
 @property (weak, nonatomic) IBOutlet UIPickerView *playerCountsPickerView;
+@property (weak, nonatomic) IBOutlet UIImageView *playerImageImageView;
 
 @end
 
@@ -41,6 +43,7 @@
     // Do any additional setup after loading the view.
     
     playerCounts = 2;
+    playerImage = nil;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -63,19 +66,21 @@
         [alert addAction:ok];
         UIViewController *rootVC = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
         [rootVC presentViewController:alert animated:YES completion:nil];
+        
+    }else if ([NetworkController sharedInstance].networkState == NetworkStateReceivedMatchStatus) {
+
+        [[NetworkController sharedInstance] findMatchWithMinPlayers:playerCounts maxPlayers:playerCounts viewController:self];
     }
-    else if (_notInMatch) {
-        
-//        [[NetworkController sharedInstance] findMatchWithMinPlayers:playerCounts maxPlayers:playerCounts viewController:self];
-        
-        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        playerInfoViewController *vc = [sb instantiateViewControllerWithIdentifier:@"playerSetView"];
-        
-        vc.playerCounts = playerCounts;
-        vc.delegate = self;
-        
-        [self presentViewController:vc animated:true completion:nil];
-    }
+}
+
+- (IBAction)editCharacterButtonPressed:(id)sender {
+    
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    playerInfoViewController *vc = [sb instantiateViewControllerWithIdentifier:@"playerSetView"];
+    
+    vc.delegate = self;
+    
+    [self presentViewController:vc animated:true completion:nil];
 }
 
 #pragma mark - NetworkControllerDelegate
@@ -136,14 +141,8 @@
     }
 }
 
-- (void)setNotInMatch {
-    
-    _notInMatch = true;
-}
-
 - (void)matchStarted:(Match *)match {
     
-//    _notInMatch = false;
 //    _match = match;
 //    
 //    Player *p1 = [_match.players objectAtIndex:0];
@@ -160,25 +159,15 @@
 //    vc.delegate = self;
 //
 //    [self presentViewController:vc animated:true completion:nil];
-    
-    _notInMatch = false;
 
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     ViewController *vc = [sb instantiateViewControllerWithIdentifier:@"mainView"];
     
     vc.match = match;
-    vc.delegate = self;
     
     vc.playerImage = playerImage;
     
     [self presentViewController:vc animated:true completion:nil];
-}
-
-#pragma mark - TestGameViewControllerDelegate
-
-- (void)TGVCsetNotInMatch {
-    
-    _notInMatch = true;
 }
 
 #pragma mark - playerInfoViewControllerDelegate
@@ -186,13 +175,7 @@
 - (void)transImage:(UIImage *)image {
     
     playerImage = image;
-}
-
-#pragma mark - ViewControllerDelegate
-
-- (void)VCsetNotInMatch {
-    
-    _notInMatch = true;
+    self.playerImageImageView.image = playerImage;
 }
 
 #pragma mark - UIPickerView

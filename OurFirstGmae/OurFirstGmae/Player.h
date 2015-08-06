@@ -16,6 +16,6 @@
 @property (nonatomic, strong) NSString *alias;
 @property (nonatomic, assign) int playerState;
 
-- (id)initWithPlayerId:(NSString*)playerId alias:(NSString*)alias playerState:(int)playerState;
+- (id)initWithPlayerImageString:(NSString*)playerImageString playerId:(NSString*)playerId alias:(NSString*)alias playerState:(int)playerState;
 
 @end

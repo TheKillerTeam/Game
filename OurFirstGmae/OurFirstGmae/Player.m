@@ -10,9 +10,13 @@
 
 @implementation Player
 
-- (id)initWithPlayerId:(NSString*)playerId alias:(NSString*)alias playerState:(int)playerState {
+- (id)initWithPlayerImageString:(NSString*)playerImageString playerId:(NSString*)playerId alias:(NSString*)alias playerState:(int)playerState {
     
     if ((self = [super init])) {
+        
+        NSData *playerImageData = [[NSData alloc] initWithBase64EncodedString:playerImageString options:NSDataBase64DecodingIgnoreUnknownCharacters];
+        UIImage *playerImage = [UIImage imageWithData:playerImageData];
+        _playerImage = playerImage;
         _playerId = playerId;
         _alias = alias;
         _playerState = playerState;

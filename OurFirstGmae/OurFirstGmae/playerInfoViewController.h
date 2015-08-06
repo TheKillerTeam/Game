@@ -18,6 +18,5 @@
 @interface playerInfoViewController : UIViewController
 
 @property (nonatomic, weak) id <playerInfoViewControllerDelegate> delegate;
-@property (nonatomic, assign) int playerCounts;
 
 @end

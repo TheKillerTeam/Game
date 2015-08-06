@@ -100,8 +100,9 @@ class GameMatch:
 
 class GamePlayer:
 
-    def __init__(self, protocol, playerId, alias):
+    def __init__(self, protocol, playerImage, playerId, alias):
         self.protocol = protocol
+	self.playerImage = playerImage
         self.playerId = playerId
         self.alias = alias
         self.match = None
@@ -111,6 +112,7 @@ class GamePlayer:
         return "%s:%d" % (self.alias, self.playerState)
 
     def write(self, message):
+	message.writeString(self.playerImage)
         message.writeString(self.playerId)
         message.writeString(self.alias)
         message.writeInt(self.playerState)
@@ -138,7 +140,7 @@ class GameFactory(Factory):
             if existingPlayer.protocol == protocol:
                 existingPlayer.protocol = None
 
-    def playerConnected(self, protocol, playerId, alias, continueMatch):
+    def playerConnected(self, protocol, playerImage, playerId, alias, continueMatch):
         for existingPlayer in self.players:
             if existingPlayer.playerId == playerId:
                 existingPlayer.protocol = protocol
@@ -148,7 +150,7 @@ class GameFactory(Factory):
                 else:
                     existingPlayer.protocol.sendNotInMatch()
                 return
-        newPlayer = GamePlayer(protocol, playerId, alias)
+        newPlayer = GamePlayer(protocol, playerImage, playerId, alias)
         protocol.player = newPlayer
         self.players.append(newPlayer)
         newPlayer.protocol.sendNotInMatch()
@@ -212,11 +214,12 @@ class GameProtocol(Protocol):
 	    self.factory.startMatch(playerIds)
 
 	def playerConnected(self, message):
+	    playerImage = message.readString()
 	    playerId = message.readString()
 	    alias = message.readString()
 	    continueMatch = message.readByte()
 	    self.log("Recv MESSAGE_PLAYER_CONNECTED %s %s %d" % (playerId, alias, continueMatch))
-	    self.factory.playerConnected(self, playerId, alias, continueMatch)
+	    self.factory.playerConnected(self, playerImage, playerId, alias, continueMatch)
 
 	def processMessage(self, message):
 	    messageId = message.readByte()

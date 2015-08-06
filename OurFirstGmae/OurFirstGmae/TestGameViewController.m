@@ -78,6 +78,7 @@
         case NetworkStateReceivedMatchStatus:
             
             _debugLabel.text = @"Received Match Status,\nReady to Look for a Match";
+            [self dismissViewControllerAnimated:self completion:nil];
             break;
             
         case NetworkStatePendingMatch:
@@ -95,13 +96,6 @@
             _debugLabel.text = @"Match Active";
             break;
     }
-}
-
-- (void)setNotInMatch {
-    
-    [_delegate TGVCsetNotInMatch];
-        
-    [self dismissViewControllerAnimated:self completion:nil];
 }
 
 - (void)matchStarted:(Match *)match {
