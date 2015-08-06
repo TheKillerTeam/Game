@@ -106,23 +106,8 @@
     [_crop.layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *myImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-
-    UIImage *img = [UIImage imageNamed:@"news3.jpg"];
     
-    NSData *imageData = UIImageJPEGRepresentation(img, 1.0f);
-
-    //encode it
-    NSString *base64string = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-    
-    NSLog(@"%@", base64string);
-    
-    //decode it
-    NSData *back = [[NSData alloc] initWithBase64EncodedString:base64string options:NSDataBase64DecodingIgnoreUnknownCharacters];
-    
-    UIImage *characterImage = [UIImage imageWithData:back];
-    
-//    [self.delegate transImage:myImage];
-    [self.delegate transImage:characterImage];
+    [self.delegate transImage:myImage];
 
     //Eric
 //    [[NetworkController sharedInstance] findMatchWithMinPlayers:_playerCounts maxPlayers:_playerCounts viewController:[[[UIApplication sharedApplication] keyWindow] rootViewController]];

@@ -7,7 +7,7 @@
 //
 
 //TODO: 1.投票 2.聊天 3.結束遊戲 4.結束後再重新開始 5.斷線重聯 6.邀請好友 7.縮小App不會斷線 8.追蹤是否有網路連線
-//9.編輯外觀時由之前的結果開始編輯 10.編輯外觀新增返回按鈕 11.離開伺服器重連後伺服器上的玩家資訊不會更新
+//9.編輯外觀時由之前的結果開始編輯 10.編輯外觀新增返回按鈕 11.外觀存檔
 
 #import "MenuViewController.h"
 #import "NetworkController.h"
@@ -17,7 +17,7 @@
 #import "playerInfoViewController.h"
 #import "ViewController.h"
 
-
+#define PLAYER_IMAGE_DEFAULT @"news2.jpg"
 #define MIN_PLAYER_COUNTS 2
 #define MAX_PLAYER_COUNTS 16
 
@@ -43,7 +43,10 @@
     // Do any additional setup after loading the view.
     
     playerCounts = 2;
-    playerImage = nil;
+    
+    //TODO:if theres a saved playerImage, load it instead of using default
+    playerImage = [UIImage imageNamed:PLAYER_IMAGE_DEFAULT];
+    self.playerImageImageView.image = playerImage;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -122,6 +125,7 @@
         case NetworkStateReceivedMatchStatus:
             
             _debugLabel.text = @"Received Match Status,\nReady to Look for a Match";
+            [[NetworkController sharedInstance]sendUpdatePlayerImage:playerImage];
             break;
             
         case NetworkStatePendingMatch:

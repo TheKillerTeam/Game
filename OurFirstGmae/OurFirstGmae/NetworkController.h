@@ -45,5 +45,6 @@ typedef enum {
 - (void)connect;
 - (void)findMatchWithMinPlayers:(int)minPlayers maxPlayers:(int)maxPlayers
                  viewController:(UIViewController *)viewController;
+- (void)sendUpdatePlayerImage:(UIImage *)image;
 
 @end

@@ -8,6 +8,7 @@ MESSAGE_PLAYER_CONNECTED = 0
 MESSAGE_NOT_IN_MATCH = 1
 MESSAGE_START_MATCH = 2
 MESSAGE_MATCH_STARTED = 3
+MESSAGE_PLAYER_IMAGE_UPDATED = 4
 
 MATCH_STATE_ACTIVE = 0
 MATCH_STATE_GAME_OVER = 1
@@ -143,6 +144,9 @@ class GameFactory(Factory):
     def playerConnected(self, protocol, playerImage, playerId, alias, continueMatch):
         for existingPlayer in self.players:
             if existingPlayer.playerId == playerId:
+		existingPlayer.playerImage = playerImage
+		existingPlayer.alias = alias
+		existingPlayer.continueMatch = continueMatch
                 existingPlayer.protocol = protocol
                 protocol.player = existingPlayer
                 if (existingPlayer.match):
@@ -154,6 +158,11 @@ class GameFactory(Factory):
         protocol.player = newPlayer
         self.players.append(newPlayer)
         newPlayer.protocol.sendNotInMatch()
+	
+    def playerImageUpdated(self, protocol, playerImage, playerId):
+	for existingPlayer in self.players:
+	    if existingPlayer.playerId == playerId:
+		existingPlayer.playerImage = playerImage
         
     def startMatch(self, playerIds):
 	matchPlayers = []
@@ -220,13 +229,21 @@ class GameProtocol(Protocol):
 	    continueMatch = message.readByte()
 	    self.log("Recv MESSAGE_PLAYER_CONNECTED %s %s %d" % (playerId, alias, continueMatch))
 	    self.factory.playerConnected(self, playerImage, playerId, alias, continueMatch)
-
+	    
+	def playerImageUpdated(self, message):
+	    playerImage = message.readString()
+	    playerId = message.readString()
+	    self.log("Recv MESSAGE_PLAYER_IMAGE_UPDATED %s" % (playerId))
+	    self.factory.playerImageUpdated(self, playerImage, playerId)
+	    
 	def processMessage(self, message):
 	    messageId = message.readByte()
 	    if messageId == MESSAGE_PLAYER_CONNECTED:
 		return self.playerConnected(message)
 	    if messageId == MESSAGE_START_MATCH:
 		return self.startMatch(message)
+	    if messageId == MESSAGE_PLAYER_IMAGE_UPDATED:
+		return self.playerImageUpdated(message)
 	    self.log("Unexpected message: %d" % (messageId))
 
 	def dataReceived(self, data):

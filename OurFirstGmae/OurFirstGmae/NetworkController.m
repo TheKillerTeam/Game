@@ -13,13 +13,15 @@
 #import "Player.h"
 
 #define SERVER_IP @"192.168.196.206"
+#define PLAYER_IMAGE_DEFAULT @"news2.jpg"
 
 typedef enum {
     
     MessagePlayerConnected = 0,//output用
-    MessageNotInMatch,//input用
-    MessageStartMatch,//output用
-    MessageMatchStarted,//input用
+    MessageNotInMatch = 1,//input用
+    MessageStartMatch = 2,//output用
+    MessageMatchStarted = 3,//input用
+    MessagePlayerImageUpdated = 4,//output用
     
 } MessageType;
 
@@ -136,7 +138,7 @@ static NetworkController *sharedController = nil;
     
     [writer writeByte:MessagePlayerConnected];
     
-    UIImage *img = [UIImage imageNamed:@"news3.jpg"];
+    UIImage *img = [UIImage imageNamed:PLAYER_IMAGE_DEFAULT];
     NSData *imageData = UIImageJPEGRepresentation(img, 1.0f);
     NSString *base64string = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
     [writer writeString:base64string];
@@ -153,13 +155,30 @@ static NetworkController *sharedController = nil;
     [self setNetworkState:NetworkStatePendingMatchStart];
     
     MessageWriter * writer = [MessageWriter new];
+    
     [writer writeByte:MessageStartMatch];
+    
     [writer writeByte:players.count];
     
     for(NSString *playerId in players) {
         
         [writer writeString:playerId];
     }
+    [self sendData:writer.data];
+}
+
+- (void)sendUpdatePlayerImage:(UIImage *)image {
+    
+    MessageWriter * writer = [MessageWriter new];
+    
+    [writer writeByte:MessagePlayerImageUpdated];
+    
+    NSData *imageData = UIImageJPEGRepresentation(image, 1.0f);
+    NSString *base64string = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    [writer writeString:base64string];
+    
+    [writer writeString:[GKLocalPlayer localPlayer].playerID];
+    
     [self sendData:writer.data];
 }
 

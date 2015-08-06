@@ -103,7 +103,7 @@
         
         tempDragImageView = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
         //TODO:change image according to player
-        tempDragImageView.image = [UIImage imageNamed:@"play7.jpg"];
+        tempDragImageView.image = player.playerImage;
         
         [playerDragImageViewArray addObject:tempDragImageView];
     }
