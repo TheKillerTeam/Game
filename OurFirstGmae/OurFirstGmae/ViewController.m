@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "playerCell.h"
+#import "ChatCell.h"
 #import "circleView.h"
 #import "playerInfoViewController.h"
 #import "cropView.h"
@@ -75,9 +76,6 @@
     ///////cicle
     [self initImageView];
     [self fromCircleView];
-
-//    playerInfoViewController *playerController = [playerInfoViewController new];
-//    playerController.delegate=self;
     
     //Eric
     [NetworkController sharedInstance].delegate = self;
@@ -169,11 +167,16 @@
             
             if ([player.playerId isEqualToString:[GKLocalPlayer localPlayer].playerID]) {
                 
-                NSString *chatString = [NSString stringWithFormat:@"%@: %@",player.alias ,chat];
-                [chatData addObject:chatString];
+//                NSString *chatString = [NSString stringWithFormat:@"%@: %@",player.alias ,chat];
+//                [chatData addObject:chatString];
+                
+                NSArray *tmpChatArray = [NSArray arrayWithObjects:(NSString *)[NSString stringWithFormat:@"%@: ", player.alias], (NSString *)chat, nil];
+                [chatData addObject:tmpChatArray];
+                
                 [self.chatBoxTableView reloadData];
                 NSIndexPath* indexPath = [NSIndexPath indexPathForRow:chatData.count-1 inSection:0];
                 [self.chatBoxTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:true];
+                break;
             }
         }
         //for other players
@@ -221,7 +224,6 @@
     UIImageView *testView =[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 400, 400)];
     testView.image=image;
     [self.view addSubview:testView];
-    
 }
 
 -(void)fromCircleView{
@@ -236,28 +238,34 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    playerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"customCell"];
-    
-    if(cell == nil){
-        
-        cell = [[playerCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"customCell"];
-    }
-    
     if (tableView == self.playerListTableView){
+        
+        playerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"playerCell"];
+
         
         Player *p = [self.match.players objectAtIndex:indexPath.row];
         
         cell.playerPhoto.image = p.playerImage;
         cell.playerName.text = [NSString stringWithFormat:@"%ld: %@",indexPath.row+1, p.alias];
-        cell.vote.text = 0;
+        cell.vote.text = @"0";
+        return cell;
         
     }else if (tableView == self.chatBoxTableView) {
+        NSLog(@"%@", chatData);
+        ChatCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ChatCell"];
         
-        cell.textLabel.text =[chatData objectAtIndex:indexPath.row];
 
+        NSArray *tmpChatArray = [chatData objectAtIndex:indexPath.row];
+        NSString *tmpPlayerName = [tmpChatArray objectAtIndex:0];
+        NSString *tmpChat = [tmpChatArray objectAtIndex:1];
+        [cell.playerNameLabel setText:tmpPlayerName];
+        [cell.chatLabel setText:tmpChat];
+        
+        return cell;
+        
+    }else {
+        return nil;
     }
-    
-    return cell;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -340,10 +348,10 @@
 - (void)matchStarted:(Match *)match {
     
 }
+
 - (IBAction)pressentBtnPressed:(id)sender {
     
-    
-    
+}
 
 - (void)updateChat:(NSString *)chat withPlayerId:(NSString *)playerId {
 
@@ -351,11 +359,16 @@
 
         if ([player.playerId isEqualToString:playerId]) {
             
-            NSString *chatString = [NSString stringWithFormat:@"%@: %@",player.alias ,chat];
-            [chatData addObject:chatString];
+//            NSString *chatString = [NSString stringWithFormat:@"%@: %@",player.alias ,chat];
+//            [chatData addObject:chatString];
+            
+            NSArray *tmpChatArray = [NSArray arrayWithObjects:(NSString *)[NSString stringWithFormat:@"%@: ", player.alias], (NSString *)chat, nil];
+            [chatData addObject:tmpChatArray];
+            
             [self.chatBoxTableView reloadData];
             NSIndexPath* indexPath = [NSIndexPath indexPathForRow:chatData.count-1 inSection:0];
             [self.chatBoxTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:true];
+            break;
         }
     }
 }

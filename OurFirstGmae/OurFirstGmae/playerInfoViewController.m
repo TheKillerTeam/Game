@@ -59,9 +59,8 @@
 - (IBAction)takePhoto:(id)sender {
     
     ImagePicker = [UIImagePickerController new];
-    UIImagePickerControllerSourceType sourceType =UIImagePickerControllerSourceTypeCamera;
     
-    if([UIImagePickerController isSourceTypeAvailable:sourceType]==false)
+    if(![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
     {
         UIAlertController *alert =[UIAlertController alertControllerWithTitle:nil message:@"The deviece dosen't support" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *ok =[UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil];
@@ -69,10 +68,10 @@
         [self presentViewController:alert animated:true completion:nil];
         return;
     }
-
+    
+    ImagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
     ImagePicker.showsCameraControls=true;
     ImagePicker.delegate=self;
-    ImagePicker.sourceType = sourceType;
   
      [self presentViewController:ImagePicker animated:YES completion:NULL];
 }
