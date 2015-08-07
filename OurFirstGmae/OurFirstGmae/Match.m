@@ -14,15 +14,15 @@
     
     if ((self = [super init])) {
         
-        _matchState = matchState;
-        _players = players;
+        self.matchState = matchState;
+        self.players = players;
     }
     return self;
 }
 
 - (void)dealloc {
     
-    _players = nil;
+    self.players = nil;
 }
 
 @end

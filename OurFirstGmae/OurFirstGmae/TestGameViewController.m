@@ -47,53 +47,53 @@
             
         case NetworkStateNotAvailable:
             
-            _debugLabel.text = @"Not Available";
+            self.debugLabel.text = @"Not Available";
             break;
             
         case NetworkStatePendingAuthentication:
             
-            _debugLabel.text = @"Pending Authentication";
+            self.debugLabel.text = @"Pending Authentication";
             break;
             
         case NetworkStateAuthenticated:
             
-            _debugLabel.text = @"Authenticated";
+            self.debugLabel.text = @"Authenticated";
             break;
             
         case NetworkStateConnectingToServer:
             
-            _debugLabel.text = @"Connecting to Server";
+            self.debugLabel.text = @"Connecting to Server";
             break;
             
         case NetworkStateConnected:
             
-            _debugLabel.text = @"Connected";
+            self.debugLabel.text = @"Connected";
             break;
             
         case NetworkStatePendingMatchStatus:
             
-            _debugLabel.text = @"Pending Match Status";
+            self.debugLabel.text = @"Pending Match Status";
             break;
             
         case NetworkStateReceivedMatchStatus:
             
-            _debugLabel.text = @"Received Match Status,\nReady to Look for a Match";
+            self.debugLabel.text = @"Received Match Status,\nReady to Look for a Match";
             [self dismissViewControllerAnimated:self completion:nil];
             break;
             
         case NetworkStatePendingMatch:
             
-            _debugLabel.text = @"Pending Match";
+            self.debugLabel.text = @"Pending Match";
             break;
             
         case NetworkStatePendingMatchStart:
             
-            _debugLabel.text = @"Pending Start";
+            self.debugLabel.text = @"Pending Start";
             break;
             
         case NetworkStateMatchActive:
             
-            _debugLabel.text = @"Match Active";
+            self.debugLabel.text = @"Match Active";
             break;
     }
 }
@@ -102,15 +102,19 @@
     
 }
 
+- (void)updateChat:(NSString *)chat withPlayerId:(NSString *)playerId {
+    
+}
+
 #pragma mark - UITableViewDelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    if (tableView == _testVoteTabelView) {
+    if (tableView == self.testVoteTabelView) {
         
-        return _match.players.count;
+        return self.match.players.count;
         
-    }else if (tableView == _testChatTableView) {
+    }else if (tableView == self.testChatTableView) {
         
         return 0;
         
@@ -122,18 +126,18 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (tableView == _testVoteTabelView) {
+    if (tableView == self.testVoteTabelView) {
         
         testVoteTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"testVoteTableViewCell" forIndexPath:indexPath];
         
-        Player *p = [_match.players objectAtIndex:indexPath.row];
+        Player *p = [self.match.players objectAtIndex:indexPath.row];
         
         cell.playerNumberLabel.text = [NSString stringWithFormat:@"Player%ld:",indexPath.row+1];
         cell.playerNameLabel.text = p.alias;
         
         return cell;
         
-    }else if (tableView == _testChatTableView) {
+    }else if (tableView == self.testChatTableView) {
         
         UITableViewCell *cell = [UITableViewCell new];
         

@@ -94,53 +94,53 @@
             
         case NetworkStateNotAvailable:
             
-            _debugLabel.text = @"Not Available";
+            self.debugLabel.text = @"Not Available";
             break;
             
         case NetworkStatePendingAuthentication:
             
-            _debugLabel.text = @"Pending Authentication";
+            self.debugLabel.text = @"Pending Authentication";
             break;
             
         case NetworkStateAuthenticated:
             
-            _debugLabel.text = @"Authenticated";
+            self.debugLabel.text = @"Authenticated";
             break;
             
         case NetworkStateConnectingToServer:
             
-            _debugLabel.text = @"Connecting to Server";
+            self.debugLabel.text = @"Connecting to Server";
             break;
             
         case NetworkStateConnected:
             
-            _debugLabel.text = @"Connected";
+            self.debugLabel.text = @"Connected";
             break;
             
         case NetworkStatePendingMatchStatus:
             
-            _debugLabel.text = @"Pending Match Status";
+            self.debugLabel.text = @"Pending Match Status";
             break;
             
         case NetworkStateReceivedMatchStatus:
             
-            _debugLabel.text = @"Received Match Status,\nReady to Look for a Match";
+            self.debugLabel.text = @"Received Match Status,\nReady to Look for a Match";
             [[NetworkController sharedInstance]sendUpdatePlayerImage:playerImage];
             break;
             
         case NetworkStatePendingMatch:
             
-            _debugLabel.text = @"Pending Match";
+            self.debugLabel.text = @"Pending Match";
             break;
             
         case NetworkStatePendingMatchStart:
             
-            _debugLabel.text = @"Pending Start";
+            self.debugLabel.text = @"Pending Start";
             break;
             
         case NetworkStateMatchActive:
             
-            _debugLabel.text = @"Match Active";
+            self.debugLabel.text = @"Match Active";
             break;
     }
 }
@@ -172,6 +172,10 @@
     vc.playerImage = playerImage;
     
     [self presentViewController:vc animated:true completion:nil];
+}
+
+- (void)updateChat:(NSString *)chat withPlayerId:(NSString *)playerId {
+    
 }
 
 #pragma mark - playerInfoViewControllerDelegate

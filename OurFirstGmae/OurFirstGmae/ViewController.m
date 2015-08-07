@@ -11,7 +11,6 @@
 #import "circleView.h"
 #import "playerInfoViewController.h"
 #import "cropView.h"
-//#import "playerInfoViewController.h"
 
 //Eric
 #import "NetworkController.h"
@@ -20,26 +19,24 @@
 
 #define INPUT_BAR_HEIGHT 60
 
-@interface ViewController () <NetworkControllerDelegate> {
+@interface ViewController () <NetworkControllerDelegate, UITableViewDelegate, UITableViewDataSource,NSStreamDelegate, UITextFieldDelegate> {
     
     UIView *inputBar;
     CGRect originframeChatBox;
     struct CGColor *oringincolorChatBox;
     
     NSMutableArray *playerDragImageViewArray;
+    
+    NSMutableArray *chatData;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *chatBoxTableView;
 @property (weak, nonatomic) IBOutlet UITableView *playerListTableView;
-@property (weak, nonatomic) IBOutlet UITextField *theTextField;
+@property (weak, nonatomic) IBOutlet UITextField *chatTextField;
 @property (weak, nonatomic) IBOutlet UIButton *sendBtn;
 @property (weak, nonatomic) IBOutlet UIButton *extraBtn;
-@property (weak, nonatomic) IBOutlet UIImageView *theImage;
-@property (weak, nonatomic) IBOutlet UIButton *theName;
-@property (weak, nonatomic) IBOutlet UILabel *thevote;
 @property (weak, nonatomic) IBOutlet UIView *thePlayerView;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImg;
-@property (weak, nonatomic) IBOutlet UIView *text;
 
 //Eric
 @property (weak, nonatomic) IBOutlet UILabel *debugLabel;
@@ -54,18 +51,18 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     ////////chatBoxTableView
-    messageData = [NSMutableArray new];
+    chatData = [NSMutableArray new];
     
-     _chatBoxTableView.backgroundColor=[UIColor colorWithWhite:1 alpha:0.5];
+     self.chatBoxTableView.backgroundColor=[UIColor colorWithWhite:1 alpha:0.5];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
    
     inputBar = [[UIView alloc]initWithFrame:CGRectMake(0,CGRectGetMaxY([UIScreen mainScreen].bounds)-INPUT_BAR_HEIGHT, CGRectGetWidth([UIScreen mainScreen].bounds),INPUT_BAR_HEIGHT)];
     inputBar.backgroundColor = [UIColor grayColor];
     
-    [inputBar addSubview:_theTextField];
-    [inputBar addSubview:_sendBtn];
-    [inputBar addSubview:_extraBtn];
+    [inputBar addSubview:self.chatTextField];
+    [inputBar addSubview:self.sendBtn];
+    [inputBar addSubview:self.extraBtn];
     inputBar.backgroundColor=[UIColor grayColor];
     [self.view addSubview:inputBar];
     
@@ -92,157 +89,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark cirleThePlayerImage
-
--(void)initImageView{
-
-    dragImageView *tempDragImageView;
-    playerDragImageViewArray = [NSMutableArray new];
-    
-    for (Player *player in self.match.players) {
-        
-        tempDragImageView = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
-        //TODO:change image according to player
-        tempDragImageView.image = player.playerImage;
-        
-        [playerDragImageViewArray addObject:tempDragImageView];
-    }
-}
-
--(void)transImage:(UIImage*)image{
-   
-    UIImageView *testView =[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 400, 400)];
-    testView.image=image;
-    [self.view addSubview:testView];
-
-}
-
--(void)fromCircleView{
-    
-    circleView *circle =[[circleView alloc]initWithFrame:CGRectMake(0, 0, _thePlayerView.frame.size.width, _thePlayerView.frame.size.height)];
-    circle.ImgArray  = playerDragImageViewArray;
-    [_thePlayerView addSubview:circle];
-    [circle loadView];
-}
-
-#pragma mark ChatOnStream
-
--(void)stream:(NSStream *)aStream handleEvent:(NSStreamEvent)eventCode{
-    
-    // NSStreamEventOpenCompleted = 1UL << 0,//輸入輸出流打開完成
-    // NSStreamEventHasBytesAvailable = 1UL << 1,//有字節可讀
-    // NSStreamEventHasSpaceAvailable = 1UL << 2,//可以發放字節
-    // NSStreamEventErrorOccurred = 1UL << 3,//連接出現錯誤
-    // NSStreamEventEndEncountered = 1UL << 4//連接結束
-    
-    switch (eventCode) {
-            
-        case NSStreamEventOpenCompleted:
-            NSLog(@"Stream opened");
-            break;
-            
-        case NSStreamEventHasBytesAvailable:
-            
-            if (aStream == inputStream) {
-                
-                uint8_t buffer[1024];
-                int len;
-                
-                while ([inputStream hasBytesAvailable]) {
-                    len = [inputStream read:buffer maxLength:sizeof(buffer)];
-                    if (len > 0) {
-                        
-                        NSString *output = [[NSString alloc] initWithBytes:buffer length:len encoding:NSASCIIStringEncoding];
-                        
-                        if (output != nil) {
-                            NSLog(@"server said: %@", output);
-                            [self getMessageFromOutput:output];
-                        }
-                    }
-                }
-            }
-            break;
-            
-        case NSStreamEventErrorOccurred:
-            NSLog(@"Can not connect to the host!");
-            break;
-            
-        case NSStreamEventEndEncountered:
-            
-            [aStream close];
-            [aStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-            
-            break;
-            
-        case NSStreamEventNone:
-            NSLog(@"NSStreamEventNone");
-            break;
-            
-        case NSStreamEventHasSpaceAvailable:
-            NSLog(@"NSStreamEventHasSpaceAvailable");
-            break;
-            
-        default:
-            NSLog(@"Unknown event");
-    }
-}
-
--(void)getMessageFromOutput:(NSString*)mesage{
-    
-    [messageData addObject:mesage];
-    [_chatBoxTableView reloadData];
-    
-    NSIndexPath *topIndexPath =
-    [NSIndexPath indexPathForRow:messageData.count-1
-                       inSection:0];
-    [self.chatBoxTableView scrollToRowAtIndexPath:topIndexPath
-                      atScrollPosition:UITableViewScrollPositionMiddle
-                              animated:YES];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    playerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"customCell"];
-    
-    if(cell == nil){
-        
-        cell = [[playerCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"customCell"];
-    }
-    
-    if (tableView == self.playerListTableView){
-
-        Player *p = [_match.players objectAtIndex:indexPath.row];
-        
-        cell.playerPhoto.image = p.playerImage;
-        cell.playerName.text = [NSString stringWithFormat:@"%ld: %@",indexPath.row+1, p.alias];
-        cell.vote.text = 0;
-
-    }else{
-
-        NSString *cellMessage =[messageData objectAtIndex:indexPath.row];
-        cell.textLabel.text =cellMessage;
-    }
-
-    return cell;
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    
-    if (tableView == self.playerListTableView){
-        
-        return _match.players.count;
-        
-    }else{
-
-        return messageData.count;
-    }
-}
-
 -(void)keyboardWillChangeFrame:(NSNotification*)notify{
 
     CGRect keyboardRect = [notify.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
@@ -257,21 +103,8 @@
     
     [UIView animateWithDuration:durationTime animations:^{
         
-          _chatBoxTableView.transform =CGAffineTransformMakeTranslation(0, transFromY);
+          self.chatBoxTableView.transform =CGAffineTransformMakeTranslation(0, transFromY);
         }];
-}
-
-- (IBAction)sentBtnPressed:(id)sender {
-    
-    NSString *response = [NSString stringWithFormat:@"msg:%@",_theTextField.text];
-    NSData *datas = [[NSData alloc]initWithData:[response dataUsingEncoding:NSASCIIStringEncoding]];
-    [outputStream write:[datas bytes] maxLength:[datas length]];
-    _theTextField.text=@"";
-    
-    if (self.resignFirstResponderWhenSend) {
-        
-        [self resignFirstResponder];
-    }
 }
 
 - (IBAction)extraBtnPressed:(id)sender {
@@ -305,11 +138,11 @@
     [UIView beginAnimations:@"animation1" context:nil];
     [UIView setAnimationDuration:0.3];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationTransition:UIViewAnimationTransitionNone forView:_playerListTableView cache:YES];
+    [UIView setAnimationTransition:UIViewAnimationTransitionNone forView:self.playerListTableView cache:YES];
     
-        NSLog(@"_playerListTableViewX=%f",_playerListTableView.frame.origin.x);
-    NSLog(@"_playerListTableViewY=%f",_playerListTableView.frame.origin.y);
-    CGRect frame = _playerListTableView.frame;
+        NSLog(@"self.playerListTableViewX=%f",self.playerListTableView.frame.origin.x);
+    NSLog(@"self.playerListTableViewY=%f",self.playerListTableView.frame.origin.y);
+    CGRect frame = self.playerListTableView.frame;
     
     if(frame.origin.y<0) {
 
@@ -321,15 +154,127 @@
     }
     
     NSLog(@"frame=%f",frame.origin.y);
-    _playerListTableView.frame =frame;
+    self.playerListTableView.frame =frame;
     
     [UIView commitAnimations];
 }
 
--(BOOL)resignFirstResponderWhenSend{
+- (IBAction)sendButtonPressed:(id)sender {
     
-    [self.theTextField resignFirstResponder];
-    return [super resignFirstResponder];
+    NSString *chat = self.chatTextField.text;
+    
+    if (chat.length > 0) {
+        //for self
+        for (Player *player in self.match.players) {
+            
+            if ([player.playerId isEqualToString:[GKLocalPlayer localPlayer].playerID]) {
+                
+                NSString *chatString = [NSString stringWithFormat:@"%@: %@",player.alias ,chat];
+                [chatData addObject:chatString];
+                [self.chatBoxTableView reloadData];
+                NSIndexPath* indexPath = [NSIndexPath indexPathForRow:chatData.count-1 inSection:0];
+                [self.chatBoxTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:true];
+            }
+        }
+        //for other players
+        [[NetworkController sharedInstance] sendChat:chat withChatType:ChatToAll];
+    }
+    //隱藏鍵盤
+    [self.view endEditing:TRUE];
+    self.chatTextField.text = nil;
+}
+
+//若點擊畫面
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    
+    [self.view endEditing:TRUE];
+}
+
+#pragma mark - UITextFieldDelegate Methods
+
+- (BOOL) textFieldShouldReturn:(UITextField *)textField {
+    NSLog(@"textFieldShouldReturn Called");
+    
+    [self sendButtonPressed:nil];
+    
+    return false;
+}
+
+#pragma mark - cirleThePlayerImage
+
+-(void)initImageView{
+    
+    dragImageView *tempDragImageView;
+    playerDragImageViewArray = [NSMutableArray new];
+    
+    for (Player *player in self.match.players) {
+        
+        tempDragImageView = [[dragImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
+        tempDragImageView.image = player.playerImage;
+        
+        [playerDragImageViewArray addObject:tempDragImageView];
+    }
+}
+
+-(void)transImage:(UIImage*)image{
+    
+    UIImageView *testView =[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 400, 400)];
+    testView.image=image;
+    [self.view addSubview:testView];
+    
+}
+
+-(void)fromCircleView{
+    
+    circleView *circle =[[circleView alloc]initWithFrame:CGRectMake(0, 0, self.thePlayerView.frame.size.width, self.thePlayerView.frame.size.height)];
+    circle.ImgArray  = playerDragImageViewArray;
+    [self.thePlayerView addSubview:circle];
+    [circle loadView];
+}
+
+#pragma mark - UITableView
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    playerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"customCell"];
+    
+    if(cell == nil){
+        
+        cell = [[playerCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"customCell"];
+    }
+    
+    if (tableView == self.playerListTableView){
+        
+        Player *p = [self.match.players objectAtIndex:indexPath.row];
+        
+        cell.playerPhoto.image = p.playerImage;
+        cell.playerName.text = [NSString stringWithFormat:@"%ld: %@",indexPath.row+1, p.alias];
+        cell.vote.text = 0;
+        
+    }else if (tableView == self.chatBoxTableView) {
+        
+        cell.textLabel.text =[chatData objectAtIndex:indexPath.row];
+
+    }
+    
+    return cell;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    if (tableView == self.playerListTableView){
+        
+        return self.match.players.count;
+        
+    }else{
+        
+        return chatData.count;
+    }
 }
 
 //Eric
@@ -341,59 +286,74 @@
             
         case NetworkStateNotAvailable:
             
-            _debugLabel.text = @"Not Available";
+            self.debugLabel.text = @"Not Available";
             break;
             
         case NetworkStatePendingAuthentication:
             
-            _debugLabel.text = @"Pending Authentication";
+            self.debugLabel.text = @"Pending Authentication";
             break;
             
         case NetworkStateAuthenticated:
             
-            _debugLabel.text = @"Authenticated";
+            self.debugLabel.text = @"Authenticated";
             break;
             
         case NetworkStateConnectingToServer:
             
-            _debugLabel.text = @"Connecting to Server";
+            self.debugLabel.text = @"Connecting to Server";
             break;
             
         case NetworkStateConnected:
             
-            _debugLabel.text = @"Connected";
+            self.debugLabel.text = @"Connected";
             break;
             
         case NetworkStatePendingMatchStatus:
             
-            _debugLabel.text = @"Pending Match Status";
+            self.debugLabel.text = @"Pending Match Status";
             break;
             
         case NetworkStateReceivedMatchStatus:
             
-            _debugLabel.text = @"Received Match Status,\nReady to Look for a Match";
+            self.debugLabel.text = @"Received Match Status,\nReady to Look for a Match";
             [self dismissViewControllerAnimated:self completion:nil];
             break;
             
         case NetworkStatePendingMatch:
             
-            _debugLabel.text = @"Pending Match";
+            self.debugLabel.text = @"Pending Match";
             break;
             
         case NetworkStatePendingMatchStart:
             
-            _debugLabel.text = @"Pending Start";
+            self.debugLabel.text = @"Pending Start";
             break;
             
         case NetworkStateMatchActive:
             
-            _debugLabel.text = @"Match Active";
+            self.debugLabel.text = @"Match Active";
             break;
     }
 }
 
 - (void)matchStarted:(Match *)match {
     
+}
+
+- (void)updateChat:(NSString *)chat withPlayerId:(NSString *)playerId {
+
+    for (Player *player in self.match.players) {
+
+        if ([player.playerId isEqualToString:playerId]) {
+            
+            NSString *chatString = [NSString stringWithFormat:@"%@: %@",player.alias ,chat];
+            [chatData addObject:chatString];
+            [self.chatBoxTableView reloadData];
+            NSIndexPath* indexPath = [NSIndexPath indexPathForRow:chatData.count-1 inSection:0];
+            [self.chatBoxTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:true];
+        }
+    }
 }
 
 @end

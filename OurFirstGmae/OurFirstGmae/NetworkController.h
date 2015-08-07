@@ -24,12 +24,21 @@ typedef enum {
     
 } NetworkState;
 
+
+typedef enum {
+    
+    ChatToAll = 0,
+    ChatToTeam = 1,
+    
+} ChatType;
+
 @class Match;
 
 @protocol NetworkControllerDelegate
 
 - (void)networkStateChanged:(NetworkState)networkState;
 - (void)matchStarted:(Match *)match;
+- (void)updateChat:(NSString *)chat withPlayerId:(NSString *)playerId;
 
 @end
 
@@ -46,5 +55,6 @@ typedef enum {
 - (void)findMatchWithMinPlayers:(int)minPlayers maxPlayers:(int)maxPlayers
                  viewController:(UIViewController *)viewController;
 - (void)sendUpdatePlayerImage:(UIImage *)image;
+- (void)sendChat:(NSString *)chat withChatType:(ChatType)chatType;
 
 @end

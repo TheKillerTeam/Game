@@ -12,18 +12,22 @@
 #import "Match.h"
 #import "Player.h"
 
-#define SERVER_IP @"192.168.196.206"
+#define SERVER_IP @"192.168.196.176"
 #define PLAYER_IMAGE_DEFAULT @"news2.jpg"
 
 typedef enum {
     
-    MessagePlayerConnected = 0,//output用
-    MessageNotInMatch = 1,//input用
-    MessageStartMatch = 2,//output用
-    MessageMatchStarted = 3,//input用
-    MessagePlayerImageUpdated = 4,//output用
+    MessagePlayerConnected = 0,     //to Server
+    MessageNotInMatch = 1,              //from Server
+    MessageStartMatch = 2,          //to Server
+    MessageMatchStarted = 3,            //from Server
+    MessagePlayerImageUpdated = 4,  //to Server
+    MessagePlayerSendChat = 5,      //to Server
+    MessageUpdateChat = 6,             //from Server
     
 } MessageType;
+
+//TODO:continue to add sendChat, updateChat function & add receiver, sender on Server
 
 @interface NetworkController () <NSStreamDelegate, GKMatchmakerViewControllerDelegate> {
     
@@ -182,6 +186,19 @@ static NetworkController *sharedController = nil;
     [self sendData:writer.data];
 }
 
+- (void)sendChat:(NSString *)chat withChatType:(ChatType)chatType{
+    
+    MessageWriter * writer = [MessageWriter new];
+    
+    [writer writeByte:MessagePlayerSendChat];
+    
+    [writer writeString:chat];
+    [writer writeByte:chatType];
+    [writer writeString:[GKLocalPlayer localPlayer].playerID];
+    
+    [self sendData:writer.data];
+}
+
 - (void)processMessage:(NSData *)data {
     
     MessageReader * reader = [[MessageReader alloc] initWithData:data];
@@ -205,12 +222,19 @@ static NetworkController *sharedController = nil;
             NSString *playerImageString = [reader readString];
             NSString *playerId = [reader readString];
             NSString *alias = [reader readString];
-            int playerState = [reader readInt];
-            Player *player = [[Player alloc] initWithPlayerImageString:playerImageString playerId:playerId alias:alias playerState:playerState];
+            int playerState = [reader readByte];
+            int playerTeam = [reader readByte];
+            Player *player = [[Player alloc] initWithPlayerImageString:playerImageString playerId:playerId alias:alias playerState:playerState playerTeam:playerTeam];
             [players addObject:player];
         }
         Match *match = [[Match alloc] initWithState:matchState players:players];
         [_delegate matchStarted:match];
+        
+    }else if (msgType == MessageUpdateChat) {
+        
+        NSString *chat = [reader readString];
+        NSString *playerId = [reader readString];
+        [self.delegate updateChat:chat withPlayerId:playerId];
     }
 }
 

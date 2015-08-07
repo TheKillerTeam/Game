@@ -189,4 +189,8 @@
 //    [self presentViewController:vc animated:true completion:nil];
 }
 
+- (void)updateChat:(NSString *)chat withPlayerId:(NSString *)playerId {
+    
+}
+
 @end
