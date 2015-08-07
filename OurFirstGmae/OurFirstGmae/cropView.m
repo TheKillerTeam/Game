@@ -55,7 +55,7 @@
     mask.layer.backgroundColor=[UIColor whiteColor].CGColor;
     mask.userInteractionEnabled= YES;
     [_cover addSubview:mask];
- 
+    [self.cover setUserInteractionEnabled:YES];
     
     
     

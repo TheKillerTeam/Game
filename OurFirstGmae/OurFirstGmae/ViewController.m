@@ -306,7 +306,7 @@
     [UIView setAnimationDuration:0.3];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
     [UIView setAnimationTransition:UIViewAnimationTransitionNone forView:_playerListTableView cache:YES];
-    
+    [self.playerListTableView setTranslatesAutoresizingMaskIntoConstraints:YES];
         NSLog(@"_playerListTableViewX=%f",_playerListTableView.frame.origin.x);
     NSLog(@"_playerListTableViewY=%f",_playerListTableView.frame.origin.y);
     CGRect frame = _playerListTableView.frame;
@@ -393,6 +393,11 @@
 }
 
 - (void)matchStarted:(Match *)match {
+    
+}
+- (IBAction)pressentBtnPressed:(id)sender {
+    
+    
     
 }
 
