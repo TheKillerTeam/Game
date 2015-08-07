@@ -36,6 +36,12 @@
 		09B33CC71B5919EB00C9008A /* OurFirstGmaeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 09B33CC61B5919EB00C9008A /* OurFirstGmaeTests.m */; };
 		09C3B3861B67D5AA00518DBE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09C3B3851B67D5AA00518DBE /* QuartzCore.framework */; };
 		09C3B3891B67E7DA00518DBE /* cropView.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C3B3881B67E7DA00518DBE /* cropView.m */; };
+		09DE68911B732E1600CA4B3D /* SlotMachine.m in Sources */ = {isa = PBXBuildFile; fileRef = 09DE68901B732E1600CA4B3D /* SlotMachine.m */; };
+		09DE68941B732E3800CA4B3D /* SlotMachineClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 09DE68931B732E3800CA4B3D /* SlotMachineClass.m */; };
+		09DE68991B73D19900CA4B3D /* Batman@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 09DE68951B73D19900CA4B3D /* Batman@2x.png */; };
+		09DE689A1B73D19900CA4B3D /* Doraemon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 09DE68961B73D19900CA4B3D /* Doraemon@2x.png */; };
+		09DE689B1B73D19900CA4B3D /* Mario@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 09DE68971B73D19900CA4B3D /* Mario@2x.png */; };
+		09DE689C1B73D19900CA4B3D /* Nobi Nobita@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 09DE68981B73D19900CA4B3D /* Nobi Nobita@2x.png */; };
 		09E901491B6748B600555908 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09E901481B6748B600555908 /* AssetsLibrary.framework */; };
 /* End PBXBuildFile section */
 
@@ -99,6 +105,14 @@
 		09C3B3851B67D5AA00518DBE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		09C3B3871B67E7DA00518DBE /* cropView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cropView.h; sourceTree = "<group>"; };
 		09C3B3881B67E7DA00518DBE /* cropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cropView.m; sourceTree = "<group>"; };
+		09DE688F1B732E1600CA4B3D /* SlotMachine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlotMachine.h; sourceTree = "<group>"; };
+		09DE68901B732E1600CA4B3D /* SlotMachine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlotMachine.m; sourceTree = "<group>"; };
+		09DE68921B732E3800CA4B3D /* SlotMachineClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlotMachineClass.h; sourceTree = "<group>"; };
+		09DE68931B732E3800CA4B3D /* SlotMachineClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlotMachineClass.m; sourceTree = "<group>"; };
+		09DE68951B73D19900CA4B3D /* Batman@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Batman@2x.png"; sourceTree = "<group>"; };
+		09DE68961B73D19900CA4B3D /* Doraemon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Doraemon@2x.png"; sourceTree = "<group>"; };
+		09DE68971B73D19900CA4B3D /* Mario@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Mario@2x.png"; sourceTree = "<group>"; };
+		09DE68981B73D19900CA4B3D /* Nobi Nobita@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Nobi Nobita@2x.png"; sourceTree = "<group>"; };
 		09E901481B6748B600555908 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -200,6 +214,10 @@
 		09B02BA81B6B7F53002D8FBF /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				09DE68951B73D19900CA4B3D /* Batman@2x.png */,
+				09DE68961B73D19900CA4B3D /* Doraemon@2x.png */,
+				09DE68971B73D19900CA4B3D /* Mario@2x.png */,
+				09DE68981B73D19900CA4B3D /* Nobi Nobita@2x.png */,
 				07AA29941B7305CD009E1013 /* news2.jpg */,
 				07AA29961B730EE2009E1013 /* news3.jpg */,
 				09A4382D1B61288000B08E1A /* play7.jpg */,
@@ -251,6 +269,7 @@
 				09A438321B61507A00B08E1A /* playerCell.h */,
 				09A438331B61507A00B08E1A /* playerCell.m */,
 				09B33CB71B5919EB00C9008A /* Images.xcassets */,
+				09DE688E1B732DA000CA4B3D /* SlotMachine */,
 				09B1EE871B64B3CC00E7C671 /* Circle */,
 				09E901441B67428700555908 /* PlayerInformationView */,
 				0735BBBB1B6EB51B000CFD5A /* Network */,
@@ -293,6 +312,17 @@
 				09B33CC51B5919EB00C9008A /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		09DE688E1B732DA000CA4B3D /* SlotMachine */ = {
+			isa = PBXGroup;
+			children = (
+				09DE688F1B732E1600CA4B3D /* SlotMachine.h */,
+				09DE68901B732E1600CA4B3D /* SlotMachine.m */,
+				09DE68921B732E3800CA4B3D /* SlotMachineClass.h */,
+				09DE68931B732E3800CA4B3D /* SlotMachineClass.m */,
+			);
+			name = SlotMachine;
 			sourceTree = "<group>";
 		};
 		09E901441B67428700555908 /* PlayerInformationView */ = {
@@ -394,8 +424,12 @@
 				093C731F1B66817800CA5400 /* play6.jpg in Resources */,
 				09A4382E1B61288000B08E1A /* play7.jpg in Resources */,
 				0721E9BE1B693D0100A0764E /* Eric.storyboard in Resources */,
+				09DE689A1B73D19900CA4B3D /* Doraemon@2x.png in Resources */,
+				09DE68991B73D19900CA4B3D /* Batman@2x.png in Resources */,
 				09B33CBB1B5919EB00C9008A /* LaunchScreen.xib in Resources */,
+				09DE689C1B73D19900CA4B3D /* Nobi Nobita@2x.png in Resources */,
 				09B33CB81B5919EB00C9008A /* Images.xcassets in Resources */,
+				09DE689B1B73D19900CA4B3D /* Mario@2x.png in Resources */,
 				07AA29951B7305CD009E1013 /* news2.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -416,6 +450,7 @@
 			files = (
 				0735BBC61B6ED833000CFD5A /* MessageReader.m in Sources */,
 				09B33CAD1B5919EB00C9008A /* AppDelegate.m in Sources */,
+				09DE68911B732E1600CA4B3D /* SlotMachine.m in Sources */,
 				09B33CAA1B5919EB00C9008A /* main.m in Sources */,
 				09B33CB31B5919EB00C9008A /* ViewController.m in Sources */,
 				0735BBCB1B6F03A1000CFD5A /* Player.m in Sources */,
@@ -423,6 +458,7 @@
 				0735BBBE1B6EB568000CFD5A /* NetworkController.m in Sources */,
 				09B1EE8A1B64B3EE00E7C671 /* circleView.m in Sources */,
 				0735BBC21B6EC89D000CFD5A /* MessageWriter.m in Sources */,
+				09DE68941B732E3800CA4B3D /* SlotMachineClass.m in Sources */,
 				0724CD141B6F55570054567F /* TestGameViewController.m in Sources */,
 				090E90741B673C1D002435F3 /* playerInfoViewController.m in Sources */,
 				09A64A0D1B6A7C950073C0F9 /* clothCell.m in Sources */,

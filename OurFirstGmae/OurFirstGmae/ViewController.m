@@ -139,7 +139,7 @@
     [UIView setAnimationDuration:0.3];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
     [UIView setAnimationTransition:UIViewAnimationTransitionNone forView:self.playerListTableView cache:YES];
-    
+    [self.playerListTableView setTranslatesAutoresizingMaskIntoConstraints:YES];
         NSLog(@"self.playerListTableViewX=%f",self.playerListTableView.frame.origin.x);
     NSLog(@"self.playerListTableViewY=%f",self.playerListTableView.frame.origin.y);
     CGRect frame = self.playerListTableView.frame;
@@ -340,6 +340,10 @@
 - (void)matchStarted:(Match *)match {
     
 }
+- (IBAction)pressentBtnPressed:(id)sender {
+    
+    
+    
 
 - (void)updateChat:(NSString *)chat withPlayerId:(NSString *)playerId {
 
