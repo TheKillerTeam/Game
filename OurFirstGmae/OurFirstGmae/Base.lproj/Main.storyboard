@@ -86,16 +86,6 @@
                                     <action selector="controlListBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sZR-KK-Og0"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="edQ-CY-afK">
-                                <rect key="frame" x="164" y="319" width="46" height="30"/>
-                                <state key="normal" title="Button">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="pressentBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OsV-Qg-Rpe"/>
-                                    <segue destination="FzT-hl-SM9" kind="presentation" id="lto-Cg-Nhf"/>
-                                </connections>
-                            </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="vl1-dQ-qKD">
                                 <rect key="frame" x="171" y="20" width="188" height="337"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -225,23 +215,23 @@
             <point key="canvasLocation" x="1176.5" y="752.5"/>
         </scene>
         <!--Slot Machine-->
-        <scene sceneID="8w7-ml-NTb">
+        <scene sceneID="yu5-mc-HdI">
             <objects>
-                <viewController modalTransitionStyle="flipHorizontal" modalPresentationStyle="pageSheet" id="FzT-hl-SM9" customClass="SlotMachine" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="slotMachine" id="zFs-fh-6j1" customClass="SlotMachine" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="uqB-FM-hmf"/>
-                        <viewControllerLayoutGuide type="bottom" id="Kf6-Wy-yKd"/>
+                        <viewControllerLayoutGuide type="top" id="N7F-oA-I2Q"/>
+                        <viewControllerLayoutGuide type="bottom" id="596-01-Ks8"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="cvT-Y4-61r">
+                    <view key="view" contentMode="scaleToFill" id="xuc-yM-k8X">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.97322411506306505" green="1" blue="0.73941192953260781" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8jF-Tg-Awu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sCb-yy-P4p" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1715.5" y="742.5"/>
+            <point key="canvasLocation" x="1737.5" y="752.5"/>
         </scene>
         <!--Player Info View Controller-->
         <scene sceneID="WvG-jW-Fct">

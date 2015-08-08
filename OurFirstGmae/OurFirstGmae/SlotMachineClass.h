@@ -31,8 +31,8 @@
 @property(strong,nonatomic)UIImageView *coverImageView;//遮罩
 @property(strong,nonatomic)UIView *contentView;// 底層圖
 @property(strong,nonatomic)NSArray *slotResult;//得到的亂數值
+@property(nonatomic)CGFloat singleUnitDuration;
 
-
-
+-(void)startSlide;
 
 @end

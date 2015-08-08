@@ -12,10 +12,16 @@
 #import "playerInfoViewController.h"
 #import "cropView.h"
 
+#import "SlotMachine.h"
+#import "TransitionDelegate.h"
+
 //Eric
 #import "NetworkController.h"
 #import "Match.h"
 #import "Player.h"
+
+
+#import <UIKit/UIKit.h>
 
 #define INPUT_BAR_HEIGHT 60
 
@@ -26,8 +32,9 @@
     struct CGColor *oringincolorChatBox;
     
     NSMutableArray *playerDragImageViewArray;
-    
+    SlotMachine *SlotVc ;
     NSMutableArray *chatData;
+    BOOL firstTime;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *chatBoxTableView;
@@ -37,7 +44,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *extraBtn;
 @property (weak, nonatomic) IBOutlet UIView *thePlayerView;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImg;
-
+@property (nonatomic, strong) TransitionDelegate *transitionController;
 //Eric
 @property (weak, nonatomic) IBOutlet UILabel *debugLabel;
 
@@ -82,11 +89,40 @@
     //Eric
     [NetworkController sharedInstance].delegate = self;
     [self networkStateChanged:[NetworkController sharedInstance].networkState];
+    
+    
+    
+    SlotVc = [[SlotMachine alloc]init];
+    self.transitionController = [[TransitionDelegate alloc] init];
+    firstTime=YES;
+    
 }
+
+-(void)viewDidAppear:(BOOL)animated{
+
+    [self callSlotMachine];
+
+
+
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+-(void)callSlotMachine{
+    if(firstTime){
+        
+        SlotVc = [self.storyboard instantiateViewControllerWithIdentifier:@"slotMachine"];
+        SlotVc.view.backgroundColor = [UIColor clearColor];
+        [SlotVc setTransitioningDelegate:_transitionController];
+        SlotVc.modalPresentationStyle= UIModalPresentationCustom;
+        [self presentViewController:SlotVc animated:YES completion:nil];
+        firstTime=NO;
+    }
 }
 
 -(void)keyboardWillChangeFrame:(NSNotification*)notify{
@@ -140,8 +176,8 @@
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
     [UIView setAnimationTransition:UIViewAnimationTransitionNone forView:self.playerListTableView cache:YES];
     [self.playerListTableView setTranslatesAutoresizingMaskIntoConstraints:YES];
-        NSLog(@"self.playerListTableViewX=%f",self.playerListTableView.frame.origin.x);
-    NSLog(@"self.playerListTableViewY=%f",self.playerListTableView.frame.origin.y);
+//        NSLog(@"self.playerListTableViewX=%f",self.playerListTableView.frame.origin.x);
+//    NSLog(@"self.playerListTableViewY=%f",self.playerListTableView.frame.origin.y);
     CGRect frame = self.playerListTableView.frame;
     
     if(frame.origin.y<0) {
@@ -153,7 +189,7 @@
         frame.origin.y -=frame.size.height+20;
     }
     
-    NSLog(@"frame=%f",frame.origin.y);
+//    NSLog(@"frame=%f",frame.origin.y);
     self.playerListTableView.frame =frame;
     
     [UIView commitAnimations];
@@ -184,11 +220,13 @@
     self.chatTextField.text = nil;
 }
 
+
 //若點擊畫面
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     
     [self.view endEditing:TRUE];
 }
+
 
 #pragma mark - UITextFieldDelegate Methods
 
@@ -340,10 +378,7 @@
 - (void)matchStarted:(Match *)match {
     
 }
-- (IBAction)pressentBtnPressed:(id)sender {
-    
-    
-    
+
 
 - (void)updateChat:(NSString *)chat withPlayerId:(NSString *)playerId {
 

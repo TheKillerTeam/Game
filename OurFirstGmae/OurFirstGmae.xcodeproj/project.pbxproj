@@ -21,6 +21,9 @@
 		07AA29971B730EE2009E1013 /* news3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 07AA29961B730EE2009E1013 /* news3.jpg */; };
 		090E90741B673C1D002435F3 /* playerInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 090E90731B673C1D002435F3 /* playerInfoViewController.m */; };
 		093C731F1B66817800CA5400 /* play6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 093C731E1B66817800CA5400 /* play6.jpg */; };
+		09837CF91B767A7C00D86606 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09837CF81B767A7C00D86606 /* UIKit.framework */; };
+		09837CFF1B767AFA00D86606 /* AnimatedTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 09837CFC1B767AFA00D86606 /* AnimatedTransitioning.m */; };
+		09837D001B767AFA00D86606 /* TransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 09837CFE1B767AFA00D86606 /* TransitionDelegate.m */; };
 		09A4382E1B61288000B08E1A /* play7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 09A4382D1B61288000B08E1A /* play7.jpg */; };
 		09A438341B61507A00B08E1A /* playerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A438331B61507A00B08E1A /* playerCell.m */; };
 		09A64A0D1B6A7C950073C0F9 /* clothCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A64A0C1B6A7C950073C0F9 /* clothCell.m */; };
@@ -36,6 +39,7 @@
 		09B33CC71B5919EB00C9008A /* OurFirstGmaeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 09B33CC61B5919EB00C9008A /* OurFirstGmaeTests.m */; };
 		09C3B3861B67D5AA00518DBE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09C3B3851B67D5AA00518DBE /* QuartzCore.framework */; };
 		09C3B3891B67E7DA00518DBE /* cropView.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C3B3881B67E7DA00518DBE /* cropView.m */; };
+		09D2A92F1B74995D00F10B50 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09D2A92E1B74995D00F10B50 /* CoreGraphics.framework */; };
 		09DE68911B732E1600CA4B3D /* SlotMachine.m in Sources */ = {isa = PBXBuildFile; fileRef = 09DE68901B732E1600CA4B3D /* SlotMachine.m */; };
 		09DE68941B732E3800CA4B3D /* SlotMachineClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 09DE68931B732E3800CA4B3D /* SlotMachineClass.m */; };
 		09DE68991B73D19900CA4B3D /* Batman@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 09DE68951B73D19900CA4B3D /* Batman@2x.png */; };
@@ -79,6 +83,11 @@
 		090E90721B673C1D002435F3 /* playerInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = playerInfoViewController.h; sourceTree = "<group>"; };
 		090E90731B673C1D002435F3 /* playerInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = playerInfoViewController.m; sourceTree = "<group>"; };
 		093C731E1B66817800CA5400 /* play6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = play6.jpg; sourceTree = "<group>"; };
+		09837CF81B767A7C00D86606 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		09837CFB1B767AFA00D86606 /* AnimatedTransitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedTransitioning.h; sourceTree = "<group>"; };
+		09837CFC1B767AFA00D86606 /* AnimatedTransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimatedTransitioning.m; sourceTree = "<group>"; };
+		09837CFD1B767AFA00D86606 /* TransitionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitionDelegate.h; sourceTree = "<group>"; };
+		09837CFE1B767AFA00D86606 /* TransitionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransitionDelegate.m; sourceTree = "<group>"; };
 		09A4382D1B61288000B08E1A /* play7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = play7.jpg; sourceTree = "<group>"; };
 		09A438321B61507A00B08E1A /* playerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = playerCell.h; sourceTree = "<group>"; };
 		09A438331B61507A00B08E1A /* playerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = playerCell.m; sourceTree = "<group>"; };
@@ -105,6 +114,7 @@
 		09C3B3851B67D5AA00518DBE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		09C3B3871B67E7DA00518DBE /* cropView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cropView.h; sourceTree = "<group>"; };
 		09C3B3881B67E7DA00518DBE /* cropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cropView.m; sourceTree = "<group>"; };
+		09D2A92E1B74995D00F10B50 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		09DE688F1B732E1600CA4B3D /* SlotMachine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlotMachine.h; sourceTree = "<group>"; };
 		09DE68901B732E1600CA4B3D /* SlotMachine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlotMachine.m; sourceTree = "<group>"; };
 		09DE68921B732E3800CA4B3D /* SlotMachineClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlotMachineClass.h; sourceTree = "<group>"; };
@@ -121,6 +131,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09837CF91B767A7C00D86606 /* UIKit.framework in Frameworks */,
+				09D2A92F1B74995D00F10B50 /* CoreGraphics.framework in Frameworks */,
 				0735BBB71B6EB351000CFD5A /* GameKit.framework in Frameworks */,
 				09C3B3861B67D5AA00518DBE /* QuartzCore.framework in Frameworks */,
 				09E901491B6748B600555908 /* AssetsLibrary.framework in Frameworks */,
@@ -191,9 +203,22 @@
 			name = Match;
 			sourceTree = "<group>";
 		};
+		09837CFA1B767AFA00D86606 /* Transition Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				09837CFB1B767AFA00D86606 /* AnimatedTransitioning.h */,
+				09837CFC1B767AFA00D86606 /* AnimatedTransitioning.m */,
+				09837CFD1B767AFA00D86606 /* TransitionDelegate.h */,
+				09837CFE1B767AFA00D86606 /* TransitionDelegate.m */,
+			);
+			path = "Transition Delegate";
+			sourceTree = "<group>";
+		};
 		09B02BA61B6B7EC7002D8FBF /* FrameWorks */ = {
 			isa = PBXGroup;
 			children = (
+				09837CF81B767A7C00D86606 /* UIKit.framework */,
+				09D2A92E1B74995D00F10B50 /* CoreGraphics.framework */,
 				0735BBB61B6EB351000CFD5A /* GameKit.framework */,
 				09C3B3851B67D5AA00518DBE /* QuartzCore.framework */,
 				09E901481B6748B600555908 /* AssetsLibrary.framework */,
@@ -321,6 +346,7 @@
 				09DE68901B732E1600CA4B3D /* SlotMachine.m */,
 				09DE68921B732E3800CA4B3D /* SlotMachineClass.h */,
 				09DE68931B732E3800CA4B3D /* SlotMachineClass.m */,
+				09837CFA1B767AFA00D86606 /* Transition Delegate */,
 			);
 			name = SlotMachine;
 			sourceTree = "<group>";
@@ -456,6 +482,7 @@
 				0735BBCB1B6F03A1000CFD5A /* Player.m in Sources */,
 				09A438341B61507A00B08E1A /* playerCell.m in Sources */,
 				0735BBBE1B6EB568000CFD5A /* NetworkController.m in Sources */,
+				09837CFF1B767AFA00D86606 /* AnimatedTransitioning.m in Sources */,
 				09B1EE8A1B64B3EE00E7C671 /* circleView.m in Sources */,
 				0735BBC21B6EC89D000CFD5A /* MessageWriter.m in Sources */,
 				09DE68941B732E3800CA4B3D /* SlotMachineClass.m in Sources */,
@@ -465,6 +492,7 @@
 				09C3B3891B67E7DA00518DBE /* cropView.m in Sources */,
 				09B1EE8D1B64B63700E7C671 /* dragImageView.m in Sources */,
 				0735BBBA1B6EB4D8000CFD5A /* MenuViewController.m in Sources */,
+				09837D001B767AFA00D86606 /* TransitionDelegate.m in Sources */,
 				09B33CB01B5919EB00C9008A /* OurFirstGmae.xcdatamodeld in Sources */,
 				0735BBCE1B6F05B7000CFD5A /* Match.m in Sources */,
 				0724CD181B700CDF0054567F /* testVoteTableViewCell.m in Sources */,
