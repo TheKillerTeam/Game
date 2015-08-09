@@ -96,7 +96,7 @@
                                     <action selector="editCharacterButtonPressed:" destination="5Uj-2L-7xS" eventType="touchUpInside" id="y12-Lp-agc"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qXv-Fh-7X2">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qXv-Fh-7X2">
                                 <rect key="frame" x="200" y="318" width="200" height="200"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="MZ7-gG-lma"/>

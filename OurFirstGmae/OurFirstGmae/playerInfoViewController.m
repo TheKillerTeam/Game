@@ -12,8 +12,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import "cropView.h"
 #import "ViewController.h"
-
-//Eric
 #import "NetworkController.h"
 
 @interface playerInfoViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate, NetworkControllerDelegate>
@@ -22,10 +20,7 @@
     
 }
 @property (weak, nonatomic) IBOutlet UIImageView *playPhoto;
-
 @property (weak, nonatomic) IBOutlet cropView *crop;
-
-//Eric
 @property (weak, nonatomic) IBOutlet UILabel *debugLabel;
 
 @end
@@ -41,8 +36,6 @@
     
     [_crop step];
     
-    
-    //Eric
     [NetworkController sharedInstance].delegate = self;
     [self networkStateChanged:[NetworkController sharedInstance].networkState];
 }
@@ -108,17 +101,9 @@
     
     [self.delegate transImage:myImage];
 
-    //Eric
-//    [[NetworkController sharedInstance] findMatchWithMinPlayers:_playerCounts maxPlayers:_playerCounts viewController:[[[UIApplication sharedApplication] keyWindow] rootViewController]];
-    
-//    if ([NetworkController sharedInstance].networkState == NetworkStateAuthenticated) {
-//
-//        [[NetworkController sharedInstance] connect];
-//    }
     [self dismissViewControllerAnimated:true completion:nil];
 }
 
-//Eric
 #pragma mark - NetworkControllerDelegate
 
 - (void)networkStateChanged:(NetworkState)networkState {

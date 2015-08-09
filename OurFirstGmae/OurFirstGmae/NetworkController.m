@@ -23,7 +23,9 @@ typedef enum {
     MessageMatchStarted = 3,            //from Server
     MessagePlayerImageUpdated = 4,  //to Server
     MessagePlayerSendChat = 5,      //to Server
-    MessageUpdateChat = 6,             //from Server
+    MessageUpdateChat = 6,              //from Server
+    MessagePlayerVoteFor = 7,       //to Server
+    MessageUpdateVote = 8,              //from Server
     
 } MessageType;
 
@@ -199,6 +201,18 @@ static NetworkController *sharedController = nil;
     [self sendData:writer.data];
 }
 
+- (void)sendVoteFor:(int)playerIndex {
+
+    MessageWriter * writer = [MessageWriter new];
+    
+    [writer writeByte:MessagePlayerVoteFor];
+    
+    [writer writeByte:playerIndex];
+    [writer writeString:[GKLocalPlayer localPlayer].playerID];
+    
+    [self sendData:writer.data];
+}
+
 - (void)processMessage:(NSData *)data {
     
     MessageReader * reader = [[MessageReader alloc] initWithData:data];
@@ -235,6 +249,13 @@ static NetworkController *sharedController = nil;
         NSString *chat = [reader readString];
         NSString *playerId = [reader readString];
         [self.delegate updateChat:chat withPlayerId:playerId];
+        
+    }else if (msgType == MessageUpdateVote) {
+        
+        int voteFor = [reader readByte];
+        int votedFor = [reader readByte];
+        NSString *playerId = [reader readString];
+        [self.delegate updateVoteFor:voteFor fromVotedFor:votedFor withPlayerId:playerId];
     }
 }
 

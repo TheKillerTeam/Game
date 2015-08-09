@@ -39,6 +39,7 @@ typedef enum {
 - (void)networkStateChanged:(NetworkState)networkState;
 - (void)matchStarted:(Match *)match;
 - (void)updateChat:(NSString *)chat withPlayerId:(NSString *)playerId;
+- (void)updateVoteFor:(int)voteFor fromVotedFor:(int)votedFor withPlayerId:(NSString *)playerId;
 
 @end
 
@@ -56,5 +57,7 @@ typedef enum {
                  viewController:(UIViewController *)viewController;
 - (void)sendUpdatePlayerImage:(UIImage *)image;
 - (void)sendChat:(NSString *)chat withChatType:(ChatType)chatType;
+- (void)sendVoteFor:(int)playerIndex;
+
 
 @end

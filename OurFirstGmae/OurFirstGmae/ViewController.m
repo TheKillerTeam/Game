@@ -12,13 +12,13 @@
 #import "circleView.h"
 #import "playerInfoViewController.h"
 #import "cropView.h"
-
-//Eric
 #import "NetworkController.h"
 #import "Match.h"
 #import "Player.h"
 
 #define INPUT_BAR_HEIGHT 60
+#define SYSTEM_ID @"SYSTEM"
+#define SYSTEM_IMAGE @"Batman.png"
 
 @interface ViewController () <NetworkControllerDelegate, UITableViewDelegate, UITableViewDataSource,NSStreamDelegate, UITextFieldDelegate> {
     
@@ -29,6 +29,8 @@
     NSMutableArray *playerDragImageViewArray;
     
     NSMutableArray *chatData;
+    NSMutableArray *voteData;
+    int selfVoteFor;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *chatBoxTableView;
@@ -38,8 +40,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *extraBtn;
 @property (weak, nonatomic) IBOutlet UIView *thePlayerView;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImg;
-
-//Eric
 @property (weak, nonatomic) IBOutlet UILabel *debugLabel;
 
 @end
@@ -77,9 +77,28 @@
     [self initImageView];
     [self fromCircleView];
     
-    //Eric
+    //vote
+    voteData = [NSMutableArray new];
+    
+    for (Player *player in self.match.players) {
+        
+        NSNumber *num = [NSNumber numberWithInt:0];
+        [voteData addObject:num];
+    }
+    selfVoteFor = 99;
+    
+    //network
     [NetworkController sharedInstance].delegate = self;
     [self networkStateChanged:[NetworkController sharedInstance].networkState];
+    
+    //hello
+    NSArray *tmpChatArray = [NSArray arrayWithObjects:SYSTEM_ID, @"Hello everyone, 歡迎來到遊戲!", nil];
+    [chatData addObject:tmpChatArray];
+    
+    [self.chatBoxTableView reloadData];
+
+    NSIndexPath* chatip = [NSIndexPath indexPathForRow:chatData.count-1 inSection:0];
+    [self.chatBoxTableView scrollToRowAtIndexPath:chatip atScrollPosition:UITableViewScrollPositionBottom animated:true];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -163,22 +182,13 @@
     
     if (chat.length > 0) {
         //for self
-        for (Player *player in self.match.players) {
-            
-            if ([player.playerId isEqualToString:[GKLocalPlayer localPlayer].playerID]) {
+        NSArray *tmpChatArray = [NSArray arrayWithObjects:(NSString *)[NSString stringWithFormat:@"%@", [GKLocalPlayer localPlayer].playerID], (NSString *)chat, nil];
+        [chatData addObject:tmpChatArray];
                 
-//                NSString *chatString = [NSString stringWithFormat:@"%@: %@",player.alias ,chat];
-//                [chatData addObject:chatString];
-                
-                NSArray *tmpChatArray = [NSArray arrayWithObjects:(NSString *)[NSString stringWithFormat:@"%@: ", player.alias], (NSString *)chat, nil];
-                [chatData addObject:tmpChatArray];
-                
-                [self.chatBoxTableView reloadData];
-                NSIndexPath* indexPath = [NSIndexPath indexPathForRow:chatData.count-1 inSection:0];
-                [self.chatBoxTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:true];
-                break;
-            }
-        }
+        [self.chatBoxTableView reloadData];
+        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:chatData.count-1 inSection:0];
+        [self.chatBoxTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:true];
+        
         //for other players
         [[NetworkController sharedInstance] sendChat:chat withChatType:ChatToAll];
     }
@@ -246,25 +256,70 @@
         Player *p = [self.match.players objectAtIndex:indexPath.row];
         
         cell.playerPhoto.image = p.playerImage;
-        cell.playerName.text = [NSString stringWithFormat:@"%ld: %@",indexPath.row+1, p.alias];
-        cell.vote.text = @"0";
+        cell.playerName.text = p.alias;
+        cell.vote.text = [NSString stringWithFormat:@"%d",[[voteData objectAtIndex:indexPath.row] intValue]];
         return cell;
         
     }else if (tableView == self.chatBoxTableView) {
-        NSLog(@"%@", chatData);
+
         ChatCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ChatCell"];
         
-
         NSArray *tmpChatArray = [chatData objectAtIndex:indexPath.row];
-        NSString *tmpPlayerName = [tmpChatArray objectAtIndex:0];
+        
+        if ([[tmpChatArray objectAtIndex:0] isEqualToString:SYSTEM_ID]) {//系統訊息
+            
+            [cell.playerImageImageView setImage:[UIImage imageNamed:SYSTEM_IMAGE]];
+            [cell.playerNameLabel setText:@"System"];
+            
+        }else {
+            
+            NSString *tmpPlayerId = [tmpChatArray objectAtIndex:0];
+            
+            for (Player *p in self.match.players) {
+                
+                if ([p.playerId isEqualToString:tmpPlayerId]) {
+                    
+                    [cell.playerImageImageView setImage:p.playerImage];
+                    
+                    if ([p.playerId isEqualToString:[GKLocalPlayer localPlayer].playerID]) {//若發話人為自己
+
+                        [cell.playerNameLabel setText:@"你"];
+                        
+                    }else {
+                        
+                        [cell.playerNameLabel setText:p.alias];
+                    }
+                    break;
+                }
+            }
+        }
         NSString *tmpChat = [tmpChatArray objectAtIndex:1];
-        [cell.playerNameLabel setText:tmpPlayerName];
         [cell.chatLabel setText:tmpChat];
         
         return cell;
         
     }else {
         return nil;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (tableView == self.playerListTableView){
+    
+        return 40;
+        
+    }else if (tableView == self.chatBoxTableView) {
+        
+        UIFont * font = [UIFont systemFontOfSize:14.0f];
+        NSString *text = [[chatData objectAtIndex:indexPath.row] objectAtIndex:1];
+        CGFloat height = [text boundingRectWithSize:CGSizeMake(300, 10000) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:@{NSFontAttributeName: font} context:nil].size.height;
+        
+        return height + 30.0f;
+        
+    }else {
+        
+        return 40;
     }
 }
 
@@ -285,7 +340,114 @@
     }
 }
 
-//Eric
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    if (tableView == self.playerListTableView) {
+
+        //TODO:check if vote for self or not
+        
+        //for other players
+        [[NetworkController sharedInstance] sendVoteFor:(int)indexPath.row];
+        
+        //for self
+        if (indexPath.row == selfVoteFor) {//選取自己已選取的玩家
+            
+            playerCell *cell = (playerCell *)[tableView cellForRowAtIndexPath:indexPath];
+            
+            //voteCount -1
+            NSNumber *num = [NSNumber numberWithInt:([[voteData objectAtIndex:indexPath.row] intValue] -1)];
+            [voteData replaceObjectAtIndex:indexPath.row withObject:num];
+            
+            cell.vote.textColor = [UIColor blackColor];
+            
+            //show message
+            Player *player = [self.match.players objectAtIndex:indexPath.row];
+            
+            NSString *systemMessgae = [NSString stringWithFormat:@"取消了對%@的投票", player.alias];
+            NSArray *tmpChatArray = [NSArray arrayWithObjects:[GKLocalPlayer localPlayer].playerID, systemMessgae, nil];
+            [chatData addObject:tmpChatArray];
+            
+            [self.chatBoxTableView reloadData];
+            //scroll to bottom
+            NSIndexPath* chatip = [NSIndexPath indexPathForRow:chatData.count-1 inSection:0];
+            [self.chatBoxTableView scrollToRowAtIndexPath:chatip atScrollPosition:UITableViewScrollPositionBottom animated:true];
+            
+            //update selfVoteFor
+            selfVoteFor = 99;
+            
+        }else if (selfVoteFor == 99) {//原本未選取玩家
+            
+            playerCell *cell = (playerCell *)[tableView cellForRowAtIndexPath:indexPath];
+            
+            //voteCount +1
+            NSNumber *num = [NSNumber numberWithInt:([[voteData objectAtIndex:indexPath.row] intValue] +1)];
+            [voteData replaceObjectAtIndex:indexPath.row withObject:num];
+            
+            cell.vote.textColor = [UIColor redColor];
+            
+            //show message
+            Player *player = [self.match.players objectAtIndex:indexPath.row];
+            
+            NSString *systemMessgae = [NSString stringWithFormat:@"將票投給了%@", player.alias];
+            NSArray *tmpChatArray = [NSArray arrayWithObjects:[GKLocalPlayer localPlayer].playerID, systemMessgae, nil];
+            [chatData addObject:tmpChatArray];
+            
+            [self.chatBoxTableView reloadData];
+            //scroll to bottom
+            NSIndexPath* chatip = [NSIndexPath indexPathForRow:chatData.count-1 inSection:0];
+            [self.chatBoxTableView scrollToRowAtIndexPath:chatip atScrollPosition:UITableViewScrollPositionBottom animated:true];
+            
+            //update selfVoteFor
+            selfVoteFor = (int)indexPath.row;
+
+            
+        }else {//原本有選取玩家
+            
+            NSIndexPath *ip = [NSIndexPath indexPathForRow:selfVoteFor inSection:0];
+            
+            playerCell *cell = (playerCell *)[tableView cellForRowAtIndexPath:ip];
+            
+            //voteCount -1
+            NSNumber *num = [NSNumber numberWithInt:([[voteData objectAtIndex:selfVoteFor] intValue] -1)];
+            [voteData replaceObjectAtIndex:selfVoteFor withObject:num];
+            
+            cell.vote.textColor = [UIColor blackColor];
+            
+            cell = (playerCell *)[tableView cellForRowAtIndexPath:indexPath];
+            
+            //voteCount +1
+            num = [NSNumber numberWithInt:([[voteData objectAtIndex:indexPath.row] intValue] +1)];
+            [voteData replaceObjectAtIndex:indexPath.row withObject:num];
+            
+            cell.vote.textColor = [UIColor redColor];
+            
+            //show message
+            Player *playerPrev = [self.match.players objectAtIndex:selfVoteFor];
+            Player *player = [self.match.players objectAtIndex:indexPath.row];
+            
+            NSString *systemMessgae = [NSString stringWithFormat:@"取消了對%@的投票，並將票投給了%@", playerPrev.alias, player.alias];
+            NSArray *tmpChatArray = [NSArray arrayWithObjects:[GKLocalPlayer localPlayer].playerID, systemMessgae, nil];
+            [chatData addObject:tmpChatArray];
+            
+            [self.chatBoxTableView reloadData];
+            //scroll to bottom
+            NSIndexPath* chatip = [NSIndexPath indexPathForRow:chatData.count-1 inSection:0];
+            [self.chatBoxTableView scrollToRowAtIndexPath:chatip atScrollPosition:UITableViewScrollPositionBottom animated:true];
+
+            //update selfVoteFor
+            selfVoteFor = (int)indexPath.row;
+        }
+        
+        [self.playerListTableView reloadData];
+
+        return nil;
+        
+    }else {
+        
+        return nil;
+    }
+}
+
 #pragma mark - NetworkControllerDelegate
 
 - (void)networkStateChanged:(NetworkState)networkState {
@@ -355,22 +517,79 @@
 
 - (void)updateChat:(NSString *)chat withPlayerId:(NSString *)playerId {
 
-    for (Player *player in self.match.players) {
+    NSArray *tmpChatArray = [NSArray arrayWithObjects:(NSString *)[NSString stringWithFormat:@"%@", playerId], (NSString *)chat, nil];
+    [chatData addObject:tmpChatArray];
+            
+    [self.chatBoxTableView reloadData];
+    //scroll to bottom
+    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:chatData.count-1 inSection:0];
+    [self.chatBoxTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:true];
+}
 
-        if ([player.playerId isEqualToString:playerId]) {
-            
-//            NSString *chatString = [NSString stringWithFormat:@"%@: %@",player.alias ,chat];
-//            [chatData addObject:chatString];
-            
-            NSArray *tmpChatArray = [NSArray arrayWithObjects:(NSString *)[NSString stringWithFormat:@"%@: ", player.alias], (NSString *)chat, nil];
-            [chatData addObject:tmpChatArray];
-            
-            [self.chatBoxTableView reloadData];
-            NSIndexPath* indexPath = [NSIndexPath indexPathForRow:chatData.count-1 inSection:0];
-            [self.chatBoxTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:true];
-            break;
-        }
+- (void)updateVoteFor:(int)voteFor fromVotedFor:(int)votedFor withPlayerId:(NSString *)playerId {
+    
+    if (voteFor == votedFor) {//選取自己已選取的玩家
+        
+        //voteCount -1
+        NSNumber *num = [NSNumber numberWithInt:([[voteData objectAtIndex:voteFor] intValue] -1)];
+        [voteData replaceObjectAtIndex:voteFor withObject:num];
+        
+        //show message
+        Player *player = [self.match.players objectAtIndex:voteFor];
+        
+        NSString *systemMessgae = [NSString stringWithFormat:@"取消了對%@的投票", player.alias];
+        NSArray *tmpChatArray = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%@", playerId],systemMessgae, nil];
+        [chatData addObject:tmpChatArray];
+        
+        [self.chatBoxTableView reloadData];
+        //scroll to bottom
+        NSIndexPath* chatip = [NSIndexPath indexPathForRow:chatData.count-1 inSection:0];
+        [self.chatBoxTableView scrollToRowAtIndexPath:chatip atScrollPosition:UITableViewScrollPositionBottom animated:true];
+        
+    }else if (votedFor == 99) {//原本未選取玩家
+        
+        //voteCount +1
+        NSNumber *num = [NSNumber numberWithInt:([[voteData objectAtIndex:voteFor] intValue] +1)];
+        [voteData replaceObjectAtIndex:voteFor withObject:num];
+        
+        //show message
+        Player *player = [self.match.players objectAtIndex:voteFor];
+        
+        NSString *systemMessgae = [NSString stringWithFormat:@"將票投給了%@", player.alias];
+        NSArray *tmpChatArray = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%@", playerId],systemMessgae, nil];
+        [chatData addObject:tmpChatArray];
+        
+        [self.chatBoxTableView reloadData];
+        //scroll to bottom
+        NSIndexPath* chatip = [NSIndexPath indexPathForRow:chatData.count-1 inSection:0];
+        [self.chatBoxTableView scrollToRowAtIndexPath:chatip atScrollPosition:UITableViewScrollPositionBottom animated:true];
+        
+    }else {//原本有選取玩家
+        
+        //voteCount -1
+        NSNumber *num = [NSNumber numberWithInt:([[voteData objectAtIndex:votedFor] intValue] -1)];
+        [voteData replaceObjectAtIndex:votedFor withObject:num];
+        
+        //voteCount +1
+        num = [NSNumber numberWithInt:([[voteData objectAtIndex:voteFor] intValue] +1)];
+        [voteData replaceObjectAtIndex:voteFor withObject:num];
+        
+        //show message
+        Player *playerPrev = [self.match.players objectAtIndex:votedFor];
+        Player *player = [self.match.players objectAtIndex:voteFor];
+        
+        NSString *systemMessgae = [NSString stringWithFormat:@"取消了對%@的投票，並將票投給了%@", playerPrev.alias, player.alias];
+        NSArray *tmpChatArray = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%@", playerId],systemMessgae, nil];
+        [chatData addObject:tmpChatArray];
+        
+        [self.chatBoxTableView reloadData];
+        //scroll to bottom
+        NSIndexPath* chatip = [NSIndexPath indexPathForRow:chatData.count-1 inSection:0];
+        [self.chatBoxTableView scrollToRowAtIndexPath:chatip atScrollPosition:UITableViewScrollPositionBottom animated:true];
+        
     }
+    
+    [self.playerListTableView reloadData];
 }
 
 @end

@@ -9,12 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "dragImageView.h"
 
-//Eric
 @class Match;
 
 @interface ViewController : UIViewController
 
-//Eric
 @property (nonatomic, strong) Match *match;
 @property (nonatomic, strong) UIImage *playerImage;
 

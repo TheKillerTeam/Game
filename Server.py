@@ -11,6 +11,8 @@ MESSAGE_MATCH_STARTED = 3
 MESSAGE_PLAYER_IMAGE_UPDATED = 4
 MESSAGE_PLAYER_SEND_CHAT = 5
 MESSAGE_UPDATE_CHAT = 6
+MESSAGE_PLAYER_VOTE_FOR = 7
+MESSAGE_UPDATE_VOTE = 8
 
 MATCH_STATE_ACTIVE = 0
 MATCH_STATE_GAME_OVER = 1
@@ -116,9 +118,10 @@ class GamePlayer:
         self.match = None
         self.playerState = PLAYER_STATE_ONE
         self.playerTeam = PLAYER_TEAM_ONE
+        self.voteFor = 99
 
     def __repr__(self):
-        return "%s:%d,%d" % (self.alias, self.playerState, self.playerTeam)
+        return "%s:%d,%d,%d" % (self.alias, self.playerState, self.playerTeam, self.voteFor)
 
     def write(self, message):
         message.writeString(self.playerImage)
@@ -159,7 +162,7 @@ class GameFactory(Factory):
                 existingPlayer.protocol = protocol
                 protocol.player = existingPlayer
                 if (existingPlayer.match):
-                    print "TODO: Already in match case"
+                    print "TODO: Already in match case update match,state,team,vote"
                 else:
                     existingPlayer.protocol.sendNotInMatch()
                 return
@@ -172,7 +175,7 @@ class GameFactory(Factory):
         for existingPlayer in self.players:
             if existingPlayer.playerId == playerId:
                 existingPlayer.playerImage = playerImage
-                
+       
     def playerSendChat(self, protocol, chat, chatType, playerId):
         if chatType == CHAT_TO_ALL:
             for existingPlayer in self.players:
@@ -184,7 +187,19 @@ class GameFactory(Factory):
                     for player in self.players:
                         if player.playerTeam == existingPlayer.playerTeam:
                             if player.playerId != playerId:
-                                existingPlayer.protocol.sendUpdateChat(chat,playerId) 
+                                existingPlayer.protocol.sendUpdateChat(chat,playerId)  
+                                
+    def playerVoteFor(self, protocol, voteFor, playerId):
+        for existingPlayer in self.players:
+            if existingPlayer.playerId == playerId:
+                votedFor = existingPlayer.voteFor
+                if existingPlayer.voteFor == voteFor:
+                    existingPlayer.voteFor = 99
+                else:
+                    existingPlayer.voteFor = voteFor
+        for existingPlayer in self.players:
+            if existingPlayer.playerId != playerId:
+                existingPlayer.protocol.sendUpdateVote(voteFor, votedFor, playerId)
 
     def startMatch(self, playerIds):
         matchPlayers = []
@@ -196,6 +211,9 @@ class GameFactory(Factory):
         match = GameMatch(matchPlayers)
         for matchPlayer in matchPlayers:
             matchPlayer.match = match
+            matchPlayer.playerState = PLAYER_STATE_ONE
+            matchPlayer.playerTeam = PLAYER_TEAM_ONE
+            matchPlayer.voteFor = 99
             matchPlayer.protocol.sendMatchStarted(match)
 
 class GameProtocol(Protocol):
@@ -272,7 +290,22 @@ class GameProtocol(Protocol):
         message.writeString(playerId)
         self.log("Sent MESSAGE_UPDATE_CHAT")
         self.sendMessage(message)
+        
+    def sendUpdateVote(self, voteFor, votedFor, playerId):
+        message = MessageWriter()
+        message.writeByte(MESSAGE_UPDATE_VOTE)
+        message.writeByte(voteFor)
+        message.writeByte(votedFor)
+        message.writeString(playerId)
+        self.log("Sent MESSAGE_UPDATE_VOTE")
+        self.sendMessage(message)
 
+    def playerVoteFor(self, message):
+        voteFor = message.readByte()
+        playerId = message.readString()
+        self.log("Recv MESSAGE_PLAYER_VOTE_FOR %s %d" % (playerId, voteFor))
+        self.factory.playerVoteFor(self, voteFor, playerId)
+        
     def processMessage(self, message):
         messageId = message.readByte()
         if messageId == MESSAGE_PLAYER_CONNECTED:
@@ -283,6 +316,8 @@ class GameProtocol(Protocol):
             return self.playerImageUpdated(message)
         if messageId == MESSAGE_PLAYER_SEND_CHAT:
             return self.playerSendChat(message)
+        if messageId == MESSAGE_PLAYER_VOTE_FOR:
+            return self.playerVoteFor(message)
         self.log("Unexpected message: %d" % (messageId))
 
     def dataReceived(self, data):
