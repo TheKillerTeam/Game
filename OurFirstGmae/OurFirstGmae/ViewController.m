@@ -80,7 +80,7 @@
     //vote
     voteData = [NSMutableArray new];
     
-    for (Player *player in self.match.players) {
+    for (int i=0; i<self.match.players.count; i++) {
         
         NSNumber *num = [NSNumber numberWithInt:0];
         [voteData addObject:num];

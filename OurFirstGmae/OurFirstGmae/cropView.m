@@ -61,6 +61,8 @@
     
     imageView=[UIImageView new];
     
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    
     imageView.frame = CGRectMake(mask.frame.size.width/2, mask.frame.size.height/2, 2*RADIUS ,2*RADIUS);
     imageView.center=CGPointMake(mask.frame.size.width/2, mask.frame.size.height/2);
 //    imageView.layer.cornerRadius=RADIUS;

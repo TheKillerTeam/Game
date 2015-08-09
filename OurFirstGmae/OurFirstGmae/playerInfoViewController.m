@@ -164,16 +164,13 @@
 
 - (void)matchStarted:(Match *)match {
     
-//    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//    ViewController *vc = [sb instantiateViewControllerWithIdentifier:@"mainView"];
-//    
-//    vc.match = match;
-//    vc.delegate = self;
-//    
-//    [self presentViewController:vc animated:true completion:nil];
 }
 
 - (void)updateChat:(NSString *)chat withPlayerId:(NSString *)playerId {
+    
+}
+
+- (void)updateVoteFor:(int)voteFor fromVotedFor:(int)votedFor withPlayerId:(NSString *)playerId {
     
 }
 

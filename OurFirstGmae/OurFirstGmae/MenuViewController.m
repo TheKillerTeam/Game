@@ -6,8 +6,8 @@
 //  Copyright (c) 2015年 CAI CHENG-HONG. All rights reserved.
 //
 
-//TODO: 1.投票 2.聊天 3.結束遊戲 4.結束後再重新開始 5.斷線重聯 6.邀請好友 7.縮小App不會斷線 8.追蹤是否有網路連線
-//9.編輯外觀時由之前的結果開始編輯 10.編輯外觀新增返回按鈕 11.外觀存檔
+//TODO: @結束遊戲 @結束後再重新開始 @斷線重聯 @邀請好友 @縮小App不會斷線 @追蹤是否有網路連線
+//@編輯外觀時由之前的結果開始編輯 @編輯外觀新增返回按鈕 @外觀存檔
 
 #import "MenuViewController.h"
 #import "NetworkController.h"
@@ -147,23 +147,6 @@
 
 - (void)matchStarted:(Match *)match {
     
-//    _match = match;
-//    
-//    Player *p1 = [_match.players objectAtIndex:0];
-//    Player *p2 = [_match.players objectAtIndex:1];
-//    
-//    _player1Label.text = p1.alias;
-//    _player2Label.text = p2.alias;
-//    
-//    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Eric" bundle:nil];
-//    TestGameViewController *vc = [sb instantiateViewControllerWithIdentifier:@"TestGameViewController"];
-//    
-//    vc.match = match;
-//    
-//    vc.delegate = self;
-//
-//    [self presentViewController:vc animated:true completion:nil];
-
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     ViewController *vc = [sb instantiateViewControllerWithIdentifier:@"mainView"];
     
@@ -175,6 +158,10 @@
 }
 
 - (void)updateChat:(NSString *)chat withPlayerId:(NSString *)playerId {
+    
+}
+
+- (void)updateVoteFor:(int)voteFor fromVotedFor:(int)votedFor withPlayerId:(NSString *)playerId {
     
 }
 
