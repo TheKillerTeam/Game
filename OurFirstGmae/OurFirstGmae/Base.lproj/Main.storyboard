@@ -214,6 +214,45 @@
             </objects>
             <point key="canvasLocation" x="1176.5" y="752.5"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="F1z-lY-DPn">
+            <objects>
+                <viewController id="GN3-FT-CFb" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="C97-hZ-Sif"/>
+                        <viewControllerLayoutGuide type="bottom" id="rij-xO-2rf"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="SLw-9I-f6J">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yep-78-E50">
+                                <rect key="frame" x="166" y="323.5" width="42" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WPt-cK-dsF">
+                                <rect key="frame" x="101" y="159" width="173" height="137"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="yep-78-E50" firstAttribute="top" secondItem="WPt-cK-dsF" secondAttribute="bottom" constant="27.5" id="DEs-OC-wwC"/>
+                            <constraint firstItem="WPt-cK-dsF" firstAttribute="leading" secondItem="SLw-9I-f6J" secondAttribute="leadingMargin" constant="85" id="J74-t9-tiV"/>
+                            <constraint firstAttribute="centerX" secondItem="WPt-cK-dsF" secondAttribute="centerX" id="Xq8-UY-NfU"/>
+                            <constraint firstAttribute="centerY" secondItem="yep-78-E50" secondAttribute="centerY" id="czo-94-UXQ"/>
+                            <constraint firstAttribute="centerX" secondItem="yep-78-E50" secondAttribute="centerX" id="j35-YY-y9w"/>
+                            <constraint firstItem="WPt-cK-dsF" firstAttribute="top" secondItem="C97-hZ-Sif" secondAttribute="bottom" constant="139" id="k1A-pH-UFA"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="WPt-cK-dsF" secondAttribute="trailing" constant="85" id="zeR-qU-p4g"/>
+                        </constraints>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RlJ-MW-uIQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1197.5" y="-189.5"/>
+        </scene>
         <!--Slot Machine-->
         <scene sceneID="yu5-mc-HdI">
             <objects>

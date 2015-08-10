@@ -203,6 +203,13 @@
 			name = Match;
 			sourceTree = "<group>";
 		};
+		09192DC31B7840C200DDD23C /* LoadingView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = LoadingView;
+			sourceTree = "<group>";
+		};
 		09837CFA1B767AFA00D86606 /* Transition Delegate */ = {
 			isa = PBXGroup;
 			children = (
@@ -294,6 +301,7 @@
 				09A438321B61507A00B08E1A /* playerCell.h */,
 				09A438331B61507A00B08E1A /* playerCell.m */,
 				09B33CB71B5919EB00C9008A /* Images.xcassets */,
+				09192DC31B7840C200DDD23C /* LoadingView */,
 				09DE688E1B732DA000CA4B3D /* SlotMachine */,
 				09B1EE871B64B3CC00E7C671 /* Circle */,
 				09E901441B67428700555908 /* PlayerInformationView */,
